@@ -1,0 +1,43 @@
+{
+    "id": "com.sensative",
+    "name": {
+        "en": "Sensative"
+    },
+    "description": {
+	    "en": "Strips (and future Sensative devices) for Homey"
+    },
+    "category": [ "appliances", "security" ],    
+    "version": "0.0.1",
+    "compatibility": ">=0.9.1",
+    "author": {
+        "name": "Marcel Veldhuizen",
+        "email": "marcel@subbot.net"
+    },
+    "drivers": [
+	    {
+		    "id": "1101011",
+		    "name": {
+			    "en": "Strips"
+		    },
+		    "zwave": {
+			    "manufacturerId": 410,
+			    "productTypeId": 3,
+			    "productId": 3,
+			    "learnmode": {
+				    "image": "/drivers/1101011/assets/learnmode.svg",
+				    "instruction": {
+					    "en": "TODO",
+					    "nl": "TODO"
+				    }
+				},
+			    "associationGroups": [ 1 ]
+		    },
+		    "class": "sensor",
+		    "capabilities": [ "alarm_contact", "measure_battery" ],
+		    "images": {
+			    "large": "/drivers/1101011/assets/images/large.png",
+			    "small": "/drivers/1101011/assets/images/small.png"
+		    }
+	    }
+    ]
+}
