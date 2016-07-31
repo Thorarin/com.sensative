@@ -7,7 +7,7 @@
 	    "en": "Strips (and future Sensative devices) for Homey"
     },
     "category": [ "appliances", "security" ],    
-    "version": "0.0.1",
+    "version": "0.1.0",
     "compatibility": ">=0.9.1",
     "author": {
         "name": "Marcel Veldhuizen",
@@ -47,18 +47,6 @@
 						    "id": "0",
 						    "label": {
 							    "en": "Binary Sensor"
-						    }
-					    },
-					    {
-						    "id": "1",
-						    "label": {
-							    "en": "Notification"
-						    }
-					    },
-					    {
-						    "id": "2",
-						    "label": {
-							    "en": "Basic"
 						    }
 					    }
 				    ],
