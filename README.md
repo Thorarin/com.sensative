@@ -1,2 +1,1 @@
-# com.sensative
-Strips (and future Sensative devices) for Homey
+This app adds support for Sensative Strips in Homey.
