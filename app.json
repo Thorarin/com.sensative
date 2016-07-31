@@ -6,18 +6,23 @@
     "description": {
 	    "en": "Strips (and future Sensative devices) for Homey"
     },
-    "category": [ "appliances", "security" ],    
+    "category": [ "appliances", "security" ],
+    "images": {
+	    "large": "/assets/images/large.jpg",
+	    "small": "/assets/images/small.jpg"
+    },	    
     "version": "0.1.0",
     "compatibility": ">=0.9.1",
     "author": {
         "name": "Marcel Veldhuizen",
-        "email": "marcel@subbot.net"
+        "email": "marcel@thorarin.net"
     },
     "drivers": [
 	    {
 		    "id": "1101011",
 		    "name": {
-			    "en": "Strips"
+			    "en": "Strips",
+				"nl": "Strips"
 		    },
 		    "zwave": {
 			    "manufacturerId": 410,
@@ -35,8 +40,8 @@
 		    "class": "sensor",
 		    "capabilities": [ "alarm_contact", "measure_battery" ],
 		    "images": {
-			    "large": "/drivers/1101011/assets/images/large.png",
-			    "small": "/drivers/1101011/assets/images/small.png"
+			    "large": "/drivers/1101011/assets/images/large.jpg",
+			    "small": "/drivers/1101011/assets/images/small.jpg"
 		    },
 		    "settings": [
 			    {
@@ -46,27 +51,32 @@
 					    {
 						    "id": "0",
 						    "label": {
-							    "en": "Binary Sensor"
+							    "en": "Binary Sensor",
+								"nl": "Binary Sensor"
 						    }
 					    }
 				    ],
 				    "value": "0",
 				    "label": {
-					    "en": "Report type"
+					    "en": "Report type",
+						"nl": "Rapportagetype"
 				    },
 				    "hint": {
-					    "en": "Notification type"
+					    "en": "Notification type. Only binary sensor is currently supported.",
+						"nl": "Notificatietype. Enkel binary sensor wordt momenteel ondersteund."
 				    }
 			    },
 			    {
 				    "id": "led_indication",
 				    "type": "checkbox",
 				    "label": {
-					    "en": "LED indication"
+					    "en": "LED indication",
+						"nl": "led-indicatie"
 				    },
 				    "value": true,
 				    "hint": {
-					    "en": "When enabled, the LED on Strips will flash shortly when the door/window is opened."
+					    "en": "When enabled, the LED on Strips will flash shortly when the door/window is opened.",
+						"nl": "Wanneer ingeschakeld zal de led op Strips kort oplichten als de deur of het raam wordt geopened."
 				    }
 			    }
 			]			
