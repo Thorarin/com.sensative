@@ -3,8 +3,6 @@
 const path          = require('path');
 const ZwaveDriver   = require('homey-zwavedriver');
 
-// http://www.pepper1.net/zwavedb/device/831
-
 module.exports = new ZwaveDriver( path.basename(__dirname), {
     debug: true,
     capabilities: {

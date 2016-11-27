@@ -21,7 +21,7 @@
     },
     "drivers": [
 	    {
-		    "id": "1101011",
+		    "id": "sensative",
 		    "name": {
 			    "en": "Strips",
 				"nl": "Strips"
@@ -31,7 +31,7 @@
 			    "productTypeId": 3,
 			    "productId": 3,
 			    "learnmode": {
-				    "image": "/drivers/1101011/assets/wakeup.svg",
+				    "image": "/drivers/sensative/assets/wakeup.svg",
 				    "instruction": {
 					    "en": "Place the round magnet at the rounded edge. When the LED blinks, move the magnet away. Repeat 3 times within 10 seconds.",
 					    "nl": "Plaats de ronde magneet op de afgeronde zijde. Haal de magneet weer weg als de LED knippert. Herhaal 3 keer binnen 10 seconden."
@@ -42,8 +42,8 @@
 		    "class": "sensor",
 		    "capabilities": [ "alarm_contact", "measure_battery" ],
 		    "images": {
-			    "large": "/drivers/1101011/assets/images/large.jpg",
-			    "small": "/drivers/1101011/assets/images/small.jpg"
+			    "large": "/drivers/sensative/assets/images/large.jpg",
+			    "small": "/drivers/sensative/assets/images/small.jpg"
 		    },
 		    "settings": [
 			    {
