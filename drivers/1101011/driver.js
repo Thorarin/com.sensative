@@ -6,33 +6,16 @@ const ZwaveDriver   = require('homey-zwavedriver');
 // http://www.pepper1.net/zwavedb/device/831
 
 module.exports = new ZwaveDriver( path.basename(__dirname), {
-    debug: true,
+    debug: false,
     capabilities: {
         'alarm_contact': {
             'command_class'             : 'COMMAND_CLASS_SENSOR_BINARY',
             'command_get'               : 'SENSOR_BINARY_GET',
             'command_report'            : 'SENSOR_BINARY_REPORT',
             'command_report_parser'     : function( report ){
-                //console.log(JSON.stringify(report));
                 return report['Sensor Value (Raw)'][0] > 0;
             }
         },        
-        // 'alarm_contact': {
-        //     'command_class'             : 'COMMAND_CLASS_NOTIFICATION',
-        //     'command_get'               : 'NOTIFICATION_GET',
-        //  'command_get_parser'        : function() {
-        //      return {
-        //          'V1 Alarm Type': 6,
-        //          'Notification Type': 'Home Security',
-        //          'Event': 6
-        //      }
-        //  },            
-        //     'command_report'            : 'NOTIFICATION_REPORT',
-        //     'command_report_parser'     : function(report) {
-        //         console.log(JSON.stringify(report));
-        //      return report['Alarm Level'] > 0;     
-        //     }
-        // },
         'measure_battery': {
             'command_class'             : 'COMMAND_CLASS_BATTERY',
             'command_get'               : 'BATTERY_GET',

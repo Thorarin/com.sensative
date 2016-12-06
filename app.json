@@ -13,8 +13,8 @@
         "large": "/assets/images/large.png",
         "small": "/assets/images/small.png"
     },
-    "version": "1.0.2",
-    "compatibility": ">=1.0.2",
+    "version": "1.0.3",
+    "compatibility": ">=1.0.3",
     "author": {
         "name": "Marcel Veldhuizen",
         "email": "marcel@thorarin.net"
