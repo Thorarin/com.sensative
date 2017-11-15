@@ -34,12 +34,22 @@
       "deur",
       "temperatuur",
       "vochtigheid"
-    ],
-  ]
-},
-"author": {
-  "name": "Marco Ruiter",
-  "email": "mruiter@tuxweb.nl"
-},
-"drivers": []
+    ]
+  },
+  "author": {
+    "name": "Marcel Veldhuizen",
+    "email": "marcel@thorarin.net"
+  },
+  "contributors": {
+    "developers": [{
+        "name": "Marcel Veldhuizen",
+        "email": "marcel@thorarin.net"
+      },
+      {
+        "name": "Marco Ruiter",
+        "email": "mruiter@tuxweb.nl"
+      }
+    ]
+  },
+  "drivers": []
 }

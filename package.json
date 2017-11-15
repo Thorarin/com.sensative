@@ -15,12 +15,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mruiter/com.sensative.git"
+    "url": "git+https://github.com/Thorarin/com.sensative.git"
   },
-  "author": "Marco Ruiter",
+  "author": "Marcel Veldhuizen",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mruiter/com.sensative/issues"
+    "url": "https://github.com/Thorarin/com.sensative/issues"
   },
   "homepage": "nog te doen"
 }

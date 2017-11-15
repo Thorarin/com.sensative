@@ -1,5 +1,5 @@
 {
-  "id": "StripsMaZw",
+  "id": "1101011",
   "name": {
     "en": "Strips-Contact",
     "nl": "Strips-Contact"
@@ -9,7 +9,7 @@
     "productTypeId": 3,
     "productId": 3,
     "learnmode": {
-      "image": "/drivers/StripsMaZw/assets/wakeup.svg",
+      "image": "/drivers/1101011/assets/wakeup.svg",
       "instruction": {
         "en": "Place the round magnet at the rounded edge. When the LED blinks, move the magnet away. Repeat 3 times within 10 seconds.",
         "nl": "Plaats de ronde magneet op de afgeronde zijde. Haal de magneet weer weg als de LED knippert. Herhaal 3 keer binnen 10 seconden."
@@ -38,8 +38,8 @@
   "class": "sensor",
   "capabilities": ["alarm_contact", "measure_battery", "alarm_battery"],
   "images": {
-    "large": "/drivers/StripsMaZw/assets/images/large.jpg",
-    "small": "/drivers/StripsMaZw/assets/images/small.jpg"
+    "large": "/drivers/1101011/assets/images/large.jpg",
+    "small": "/drivers/1101011/assets/images/small.jpg"
   },
   "settings": [{
       "id": 1,
