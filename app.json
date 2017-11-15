@@ -1,100 +1,325 @@
 {
-    "id": "com.sensative",
-    "name": {
-        "en": "Sensative",
-        "nl": "Sensative"
-    },
-    "description": {
-        "en": "Strips for Homey",
-        "nl": "Strips voor Homey"
-    },
-    "category": [ "appliances", "security" ],
-    "images": {
-        "large": "/assets/images/large.png",
-        "small": "/assets/images/small.png"
-    },
-    "version": "1.0.3",
-    "compatibility": ">=1.0.3",
-    "author": {
-        "name": "Marcel Veldhuizen",
-        "email": "marcel@thorarin.net"
-    },
-    "drivers": [
-        {
-            "id": "1101011",
-            "name": {
-                "en": "Strips",
-                "nl": "Strips"
-            },
-            "zwave": {
-                "manufacturerId": 410,
-                "productTypeId": 3,
-                "productId": 3,
-                "learnmode": {
-                    "image": "/drivers/1101011/assets/wakeup.svg",
-                    "instruction": {
-                        "en": "Place the round magnet at the rounded edge. When the LED blinks, move the magnet away. Repeat 3 times within 10 seconds.",
-                        "nl": "Plaats de ronde magneet op de afgeronde zijde. Haal de magneet weer weg als de LED knippert. Herhaal 3 keer binnen 10 seconden."
-                    }
-                },
-                "associationGroups": [ 1 ],
-                "wakeUpInterval": 86400,
-                "defaultConfiguration": [
-                    {
-                        "id": 1,
-                        "size": 1,
-                        "value": 0
-                    },
-                    {
-                        "id": 2,
-                        "size": 1,
-                        "value": 1
-                    }
-                ]
-            },
-            "class": "sensor",
-            "capabilities": [ "alarm_contact", "measure_battery" ],
-            "images": {
-                "large": "/drivers/1101011/assets/images/large.jpg",
-                "small": "/drivers/1101011/assets/images/small.jpg"
-            },
-            "settings": [
-                {
-                    "id": "report_type",
-                    "type": "dropdown",
-                    "values": [
-                        {
-                            "id": "0",
-                            "label": {
-                                "en": "Binary Sensor",
-                                "nl": "Binary Sensor"
-                            }
-                        }
-                    ],
-                    "value": "0",
-                    "label": {
-                        "en": "Report type",
-                        "nl": "Rapportagetype"
-                    },
-                    "hint": {
-                        "en": "Notification type. Only binary sensor is currently supported.",
-                        "nl": "Notificatietype. Enkel binary sensor wordt momenteel ondersteund."
-                    }
-                },
-                {
-                    "id": "led_indication",
-                    "type": "checkbox",
-                    "label": {
-                        "en": "LED indication",
-                        "nl": "led-indicatie"
-                    },
-                    "value": true,
-                    "hint": {
-                        "en": "When enabled, the LED on Strips will flash shortly when the door/window is opened.",
-                        "nl": "Wanneer ingeschakeld zal de led op Strips kort oplichten als de deur of het raam wordt geopened."
-                    }
-                }
-            ]
-        }
+  "id": "com.sensative",
+  "sdk": 2,
+  "name": {
+    "en": "Sensative",
+    "nl": "Sensative"
+  },
+  "description": {
+    "en": "Sensative Z-Wave Strips support for Homey",
+    "nl": "Sensative Z-Wave Strips ondersteuning voor Homey"
+  },
+  "category": [
+    "appliances",
+    "security",
+    "climate"
+  ],
+  "images": {
+    "large": "/assets/images/large.png",
+    "small": "/assets/images/small.png"
+  },
+  "version": "2.0.0",
+  "compatibility": ">=1.5.0",
+  "tags": {
+    "en": [
+      "security",
+      "alarm",
+      "contact",
+      "window",
+      "door",
+      "temperature",
+      "humidity"
+    ],
+    "nl": [
+      "beveiliging",
+      "alarm",
+      "contact",
+      "raam",
+      "deur",
+      "temperatuur",
+      "vochtigheid"
     ]
+  },
+  "author": {
+    "name": "Marco Ruiter",
+    "email": "mruiter@tuxweb.nl"
+  },
+  "drivers": [
+    {
+      "id": "StripsMaZw",
+      "name": {
+        "en": "Strips-Contact",
+        "nl": "Strips-Contact"
+      },
+      "zwave": {
+        "manufacturerId": 410,
+        "productTypeId": 3,
+        "productId": 3,
+        "learnmode": {
+          "image": "/drivers/StripsMaZw/assets/wakeup.svg",
+          "instruction": {
+            "en": "Place the round magnet at the rounded edge. When the LED blinks, move the magnet away. Repeat 3 times within 10 seconds.",
+            "nl": "Plaats de ronde magneet op de afgeronde zijde. Haal de magneet weer weg als de LED knippert. Herhaal 3 keer binnen 10 seconden."
+          }
+        },
+        "associationGroups": [
+          1
+        ],
+        "associationGroupsOptions": {
+          "1": {
+            "hint": {
+              "en": "Z-Wave Plus Lifeline"
+            }
+          }
+        },
+        "defaultConfiguration": [
+          {
+            "id": 1,
+            "size": 1,
+            "value": 0
+          },
+          {
+            "id": 2,
+            "size": 1,
+            "value": 1
+          }
+        ]
+      },
+      "class": "sensor",
+      "capabilities": [
+        "alarm_contact",
+        "measure_battery",
+        "alarm_battery"
+      ],
+      "images": {
+        "large": "/drivers/StripsMaZw/assets/images/large.jpg",
+        "small": "/drivers/StripsMaZw/assets/images/small.jpg"
+      },
+      "settings": [
+        {
+          "id": 1,
+          "value": "0",
+          "_size": 1,
+          "type": "dropdown",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Binary Sensor",
+                "nl": "Binary Sensor"
+              }
+            }
+          ],
+          "label": {
+            "en": "Notification type",
+            "nl": "Rapportagetype"
+          },
+          "hint": {
+            "en": "Notification type. Only binary sensor is currently supported.",
+            "nl": "Notificatietype. Enkel binary sensor wordt momenteel ondersteund."
+          }
+        },
+        {
+          "id": 2,
+          "type": "checkbox",
+          "_size": 1,
+          "value": true,
+          "label": {
+            "en": "LED indication",
+            "nl": "led-indicatie"
+          },
+          "hint": {
+            "en": "When enabled, the LED on Strips will flash shortly when the door/window is opened.",
+            "nl": "Wanneer ingeschakeld zal de led op Strips kort oplichten als de deur of het raam wordt geopened."
+          }
+        }
+      ]
+    },
+    {
+      "id": "StripsMultisensor",
+      "name": {
+        "en": "Strips-Multi-sensor",
+        "nl": "Strips-Multi-sensor"
+      },
+      "zwave": {
+        "manufacturerId": 410,
+        "productTypeId": 3,
+        "productId": 10,
+        "learnmode": {
+          "image": "/drivers/StripsMultisensor/assets/wakeup.svg",
+          "instruction": {
+            "en": "Place the round magnet at the rounded edge. When the LED blinks, move the magnet away. Repeat 3 times within 10 seconds.",
+            "nl": "Plaats de ronde magneet op de afgeronde zijde. Haal de magneet weer weg als de LED knippert. Herhaal 3 keer binnen 10 seconden."
+          }
+        },
+        "associationGroups": [
+          1
+        ],
+        "associationGroupsOptions": {
+          "1": {
+            "hint": {
+              "en": "Z-Wave Plus Lifeline"
+            }
+          }
+        }
+      },
+      "class": "sensor",
+      "capabilities": [
+        "measure_temperature",
+        "measure_luminance",
+        "measure_moisture",
+        "alarm_heat",
+        "alarm_water",
+        "measure_battery",
+        "alarm_battery"
+      ],
+      "images": {
+        "large": "/drivers/StripsMultisensor/assets/images/large.jpg",
+        "small": "/drivers/StripsMultisensor/assets/images/small.jpg"
+      },
+      "settings": [
+        {
+          "id": 10,
+          "value": true,
+          "label": {
+            "en": "Leakage alarm",
+            "nl": "Lekkage alarm"
+          },
+          "hint": {
+            "en": "0: Off\r\n1: On",
+            "nl": "0: Uit\r\n1: Aan"
+          },
+          "_size": 1,
+          "type": "checkbox"
+        },
+        {
+          "id": 11,
+          "value": 25,
+          "label": {
+            "en": "Leakage alarm level",
+            "nl": "Lekkage alarm level"
+          },
+          "hint": {
+            "en": "1 to 100\r\n(1= almost dry, 100= soaking wet)",
+            "nl": "1 tot 100\r\n(1= Bijna droog, 100= Erg nat)"
+          },
+          "_size": 1,
+          "type": "number"
+        },
+        {
+          "id": 12,
+          "value": 0,
+          "label": {
+            "en": "Moisture reporting period",
+            "nl": "Vochtigheid rapportage periode"
+          },
+          "hint": {
+            "en": "0-240: Number of hours between moisture reports",
+            "nl": "0-240: Aantal uren tussen vochyigheids rapportage"
+          },
+          "_size": 1,
+          "type": "number"
+        },
+        {
+          "id": 3,
+          "value": 1,
+          "label": {
+            "en": "Temperature reporting mode",
+            "nl": "Temperatuur rapportage modus"
+          },
+          "hint": {
+            "en": "0: Off\r\n1: Normal\r\n2: High Accuracy",
+            "nl": "0: Uit\r\n1: Normaal\r\n2: Secuur"
+          },
+          "_size": 1,
+          "type": "number"
+        },
+        {
+          "id": 4,
+          "value": true,
+          "label": {
+            "en": "Temperature reporting unit",
+            "nl": "Temperatuur rapportage eenheid"
+          },
+          "hint": {
+            "en": "0: Celcius\r\n1: Fahrenheit",
+            "nl": "0: Celcius\r\n1: Fahrenheit"
+          },
+          "_size": 1,
+          "type": "checkbox"
+        },
+        {
+          "id": 5,
+          "value": true,
+          "label": {
+            "en": "High Temperature alarm",
+            "nl": "Hoge temperatuur alarm"
+          },
+          "hint": {
+            "en": "0: Off\r\n1: On",
+            "nl": "0: Uit\r\n1: Aan"
+          },
+          "_size": 1,
+          "type": "checkbox"
+        },
+        {
+          "id": 6,
+          "value": 60,
+          "label": {
+            "en": "High Temperature alarm level",
+            "nl": "Hoge Temperatuur alarm nivo"
+          },
+          "hint": {
+            "en": "-20 to + 60 degree C",
+            "nl": "-20 tot + 60 degree C"
+          },
+          "_size": 1,
+          "type": "number"
+        },
+        {
+          "id": 7,
+          "value": true,
+          "label": {
+            "en": "Low Temperature alarm",
+            "nl": "Lage Temperatuur alarm"
+          },
+          "hint": {
+            "en": "0: Off\r\n1: On",
+            "nl": "0: Uit\r\n1: Aan"
+          },
+          "_size": 1,
+          "type": "checkbox"
+        },
+        {
+          "id": 8,
+          "value": -20,
+          "label": {
+            "en": "Low Temperature alarm level",
+            "nl": "Laag Temperatuur alarm nivo"
+          },
+          "hint": {
+            "en": "-20 to + 60 degree C",
+            "nl": "-20 tot + 60 degree C"
+          },
+          "_size": 1,
+          "type": "number"
+        },
+        {
+          "id": 9,
+          "value": true,
+          "label": {
+            "en": "Ambient light reporting",
+            "nl": "Omgevingslicht rapportage"
+          },
+          "hint": {
+            "en": "0: Off\r\n1: On",
+            "nl": "0: Uit\r\n1: Aan"
+          },
+          "_size": 1,
+          "type": "checkbox"
+        }
+      ]
+    }
+  ],
+  "flow": {}
 }

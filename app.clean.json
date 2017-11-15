@@ -1,0 +1,45 @@
+{
+  "id": "com.sensative",
+  "sdk": 2,
+  "name": {
+    "en": "Sensative",
+    "nl": "Sensative"
+  },
+  "description": {
+    "en": "Sensative Z-Wave Strips support for Homey",
+    "nl": "Sensative Z-Wave Strips ondersteuning voor Homey"
+  },
+  "category": ["appliances", "security", "climate"],
+  "images": {
+    "large": "/assets/images/large.png",
+    "small": "/assets/images/small.png"
+  },
+  "version": "2.0.0",
+  "compatibility": ">=1.5.0",
+  "tags": {
+    "en": [
+      "security",
+      "alarm",
+      "contact",
+      "window",
+      "door",
+      "temperature",
+      "humidity"
+    ],
+    "nl": [
+      "beveiliging",
+      "alarm",
+      "contact",
+      "raam",
+      "deur",
+      "temperatuur",
+      "vochtigheid"
+    ],
+  ]
+},
+"author": {
+  "name": "Marco Ruiter",
+  "email": "mruiter@tuxweb.nl"
+},
+"drivers": []
+}
