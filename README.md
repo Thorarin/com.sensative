@@ -1,35 +1,23 @@
-# Sensative Strips Support App for Homey @ Athom.com
-Delivers support for the contact en multisensor strip
+This app adds support for Sensative Strips in Homey.
 
 ## Supported devices with most common parameters:
 * Strips-MaZw, Contact Alarm strip for Doors and Windows   
 * Strips-Multi-sensor, Multi Sensor strip  
 
-## Supported devices with some parameters:    
-None until Sensative releases new products    
-
 ## Supported Languages:
 * English
 * Dutch
 
-## Support notes:
-Most reliable way to update battery powered devices   
-1. Place the sensor near Homey (< 1 meter)   
-2. Change the settings to the values you want   
-3. Wake up the sensor (triple click the button)   
-4. During the blinking of the LED (indicating connection to Homey) press "save settings"   
+Release notes
+-------------
+**1.0.3:**
+* Z-Wave configuration parameters should be properly initialized upon inclusion now.
+* Requires Homey 1.0.3 firmware due to an issue in combination with 1.0.1 and 1.0.2 firmwares.
 
-If problems persists:    
-a. Temporarely disable other Z-wave apps   
-b. change the setting to another value with above steps   
-c. check if effective and retry to the desired value    
+**1.0.1:**
+* In this initial version, Strips will be set to a simple binary sensor. I'd like to switch to using its default operating mode in the future, which may require the device to be re-added.
+* The US version of Strips is not yet recognized. It may be added in a future version (testers needed).
 
-## Change Log:     
-
-### v 2.0.0  
-**update:**   
-Moved App to zwave-mesh driver and SDKv2   
-Added support for the multisensor strip    
-
-### Older     
-Older changelog notes have been ereased from this timeline......
+Disclaimer
+----------
+This application is not affiliated with Sensative AB. Sensative AB is not responsible for the operation or content of this application.
