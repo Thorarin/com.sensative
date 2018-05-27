@@ -1,1 +1,3 @@
-{}
+{
+  "requireWakeUpWarning": "Notifications may stop functioning until the device has been woken up."
+}

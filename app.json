@@ -19,7 +19,7 @@
     "small": "/assets/images/small.png"
   },
   "version": "2.0.0",
-  "compatibility": ">=1.5.0",
+  "compatibility": "1.x >=1.5.0",
   "tags": {
     "en": [
       "security",
@@ -60,8 +60,8 @@
     {
       "id": "1101011",
       "name": {
-        "en": "Strips-Contact",
-        "nl": "Strips-Contact"
+        "en": "Strips Guard",
+        "nl": "Strips Guard"
       },
       "zwave": {
         "manufacturerId": 410,
@@ -88,7 +88,7 @@
           {
             "id": 1,
             "size": 1,
-            "value": 0
+            "value": 1
           },
           {
             "id": 2,
@@ -100,6 +100,7 @@
       "class": "sensor",
       "capabilities": [
         "alarm_contact",
+        "alarm_tamper",
         "measure_battery",
         "alarm_battery"
       ],
@@ -109,10 +110,13 @@
       },
       "settings": [
         {
-          "id": 1,
-          "value": "0",
-          "_size": 1,
+          "id": "report_type",
+          "value": "1",
           "type": "dropdown",
+          "zwave": {
+            "index": 1,
+            "size": 1
+          },
           "values": [
             {
               "id": "0",
@@ -120,22 +124,32 @@
                 "en": "Binary Sensor",
                 "nl": "Binary Sensor"
               }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "Notification",
+                "nl": "Notification"
+              }
             }
           ],
           "label": {
             "en": "Notification type",
-            "nl": "Rapportagetype"
+            "nl": "Notificatietype"
           },
           "hint": {
-            "en": "Notification type. Only binary sensor is currently supported.",
-            "nl": "Notificatietype. Enkel binary sensor wordt momenteel ondersteund."
+            "en": "Z-Wave command class used for reporting contact sensor events. Notification is typically best.",
+            "nl": "Z-Wave command class die gebruikt wordt voor rapportages van de contactsensor. Notification heeft meestal de voorkeur."
           }
         },
         {
-          "id": 2,
+          "id": "led_indication",
           "type": "checkbox",
-          "_size": 1,
           "value": true,
+          "zwave": {
+            "index": 2,
+            "size": 1
+          },
           "label": {
             "en": "LED indication",
             "nl": "led-indicatie"
@@ -148,17 +162,17 @@
       ]
     },
     {
-      "id": "1102012",
+      "id": "1102011",
       "name": {
-        "en": "Strips-Multi-Sensor",
-        "nl": "Strips-Multi-Sensor"
+        "en": "Strips Drip/Comfort",
+        "nl": "Strips Drip/Comfort"
       },
       "zwave": {
         "manufacturerId": 410,
         "productTypeId": 3,
         "productId": 10,
         "learnmode": {
-          "image": "/drivers/1102012/assets/wakeup.svg",
+          "image": "/drivers/1102011/assets/wakeup.svg",
           "instruction": {
             "en": "Place the round magnet at the rounded edge. When the LED blinks, move the magnet away. Repeat 3 times within 10 seconds.",
             "nl": "Plaats de ronde magneet op de afgeronde zijde. Haal de magneet weer weg als de LED knippert. Herhaal 3 keer binnen 10 seconden."
@@ -179,23 +193,51 @@
       "capabilities": [
         "measure_temperature",
         "measure_luminance",
-        "measure_moisture",
+        "measure_humidity",
         "alarm_heat",
         "alarm_water",
         "measure_battery",
         "alarm_battery"
       ],
       "images": {
-        "large": "/drivers/1102012/assets/images/large.jpg",
-        "small": "/drivers/1102012/assets/images/small.jpg"
+        "large": "/drivers/1102011/assets/images/large.jpg",
+        "small": "/drivers/1102011/assets/images/small.jpg"
       },
       "settings": [
         {
           "id": 10,
+          "value": 40000,
+          "label": {
+            "en": "High ambient light report level",
+            "nl": "High ambient light report level"
+          },
+          "hint": {
+            "en": "3 to 64000",
+            "nl": "3 tot 64000"
+          },
+          "_size": 4,
+          "type": "number"
+        },
+        {
+          "id": 11,
+          "value": 5000,
+          "label": {
+            "en": "Low ambient light report level (Must be significantly lower than parameter 10)",
+            "nl": "Low ambient light report level (Must be significantly lower than parameter 10)"
+          },
+          "hint": {
+            "en": "1 to 42000",
+            "nl": "1 tot 42000"
+          },
+          "_size": 4,
+          "type": "number"
+        },
+        {
+          "id": 12,
           "value": true,
           "label": {
             "en": "Leakage alarm",
-            "nl": "Lekkage alarm"
+            "nl": "Lekkage-alarm"
           },
           "hint": {
             "en": "0: Off\r\n1: On",
@@ -205,49 +247,77 @@
           "type": "checkbox"
         },
         {
-          "id": 11,
-          "value": 25,
+          "id": 13,
+          "value": 10,
           "label": {
             "en": "Leakage alarm level",
             "nl": "Lekkage alarm level"
           },
           "hint": {
-            "en": "1 to 100\r\n(1= almost dry, 100= soaking wet)",
-            "nl": "1 tot 100\r\n(1= Bijna droog, 100= Erg nat)"
+            "en": "1 to 100\r\n(1= almost dry, 100= wet)",
+            "nl": "1 tot 100\r\n(1= Bijna droog, 100= nat)"
           },
           "_size": 1,
           "type": "number"
         },
         {
-          "id": 12,
+          "id": 14,
           "value": 0,
           "label": {
             "en": "Moisture reporting period",
-            "nl": "Vochtigheid rapportage periode"
+            "nl": "Vochtigheid rapportageperiode"
           },
           "hint": {
-            "en": "0-240: Number of hours between moisture reports",
-            "nl": "0-240: Aantal uren tussen vochyigheids rapportage"
+            "en": "0-120: Number of hours between moisture reports",
+            "nl": "0-120: Aantal uren tussen vochtigheidsrapportage"
           },
           "_size": 1,
           "type": "number"
+        },
+        {
+          "id": 2,
+          "value": true,
+          "label": {
+            "en": "LED alarm event reporting",
+            "nl": "LED alarm event rapportage"
+          },
+          "hint": {
+            "en": "0: Off\r\n1: On",
+            "nl": "0: Uit\r\n1: Aan"
+          },
+          "_size": 1,
+          "type": "checkbox"
         },
         {
           "id": 3,
           "value": 1,
           "label": {
-            "en": "Temperature reporting mode",
-            "nl": "Temperatuur rapportage modus"
+            "en": "Temperature & Light reporting frequency",
+            "nl": "Temperatuur & Light rapportage frequency"
           },
           "hint": {
-            "en": "0: Off\r\n1: Normal\r\n2: High Accuracy",
-            "nl": "0: Uit\r\n1: Normaal\r\n2: Secuur"
+            "en": "1: Normal\r\n2: Frequent",
+            "nl": "1: Normaal\r\n2: Frequent"
           },
           "_size": 1,
           "type": "number"
         },
         {
           "id": 4,
+          "value": true,
+          "label": {
+            "en": "Temperature reporting (Does not affect temperature alarms)",
+            "nl": "Temperatuur rapportage (Does not affect temperature alarms)"
+          },
+          "hint": {
+            "en": "0: Off\r\n1: On",
+            "nl": "0: Uit\r\n1: Aan"
+          },
+          "_size": 1,
+          "type": "checkbox"
+        },
+        {
+          "id": 5,
           "value": true,
           "label": {
             "en": "Temperature reporting unit",
@@ -261,11 +331,11 @@
           "type": "checkbox"
         },
         {
-          "id": 5,
-          "value": true,
+          "id": 6,
+          "value": false,
           "label": {
-            "en": "High Temperature alarm",
-            "nl": "Hoge temperatuur alarm"
+            "en": "Temperature alarms",
+            "nl": "temperatuur alarms"
           },
           "hint": {
             "en": "0: Off\r\n1: On",
@@ -273,34 +343,20 @@
           },
           "_size": 1,
           "type": "checkbox"
-        },
-        {
-          "id": 6,
-          "value": 60,
-          "label": {
-            "en": "High Temperature alarm level",
-            "nl": "Hoge Temperatuur alarm nivo"
-          },
-          "hint": {
-            "en": "-20 to + 60 degree C",
-            "nl": "-20 tot + 60 degree C"
-          },
-          "_size": 1,
-          "type": "number"
         },
         {
           "id": 7,
-          "value": true,
+          "value": 60,
           "label": {
-            "en": "Low Temperature alarm",
-            "nl": "Lage Temperatuur alarm"
+            "en": "High Temperature alarm level",
+            "nl": "Hoge Temperatuur alarm niveau"
           },
           "hint": {
-            "en": "0: Off\r\n1: On",
-            "nl": "0: Uit\r\n1: Aan"
+            "en": "-20 to +60 degrees Celcius",
+            "nl": "-20 tot +60 graden Celsius"
           },
           "_size": 1,
-          "type": "checkbox"
+          "type": "number"
         },
         {
           "id": 8,
@@ -310,25 +366,25 @@
             "nl": "Laag Temperatuur alarm nivo"
           },
           "hint": {
-            "en": "-20 to + 60 degree C",
-            "nl": "-20 tot + 60 degree C"
+            "en": "-20 to +60 degrees Celcius",
+            "nl": "-20 tot +60 graden Celcius"
           },
           "_size": 1,
           "type": "number"
         },
         {
           "id": 9,
-          "value": true,
+          "value": 1,
           "label": {
             "en": "Ambient light reporting",
             "nl": "Omgevingslicht rapportage"
           },
           "hint": {
-            "en": "0: Off\r\n1: On",
-            "nl": "0: Uit\r\n1: Aan"
+            "en": "0: Off\r\n1: On\r\n2: Report only when levels defined in parameter 10 & 11 are passed.",
+            "nl": "0: Uit\r\n1: Aan\r\n2: Report only when levels defined in parameter 10 & 11 are passed."
           },
           "_size": 1,
-          "type": "checkbox"
+          "type": "number"
         }
       ]
     }
