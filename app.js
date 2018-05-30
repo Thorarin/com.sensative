@@ -1,5 +1,16 @@
-"use strict";
+'use strict';
 
-module.exports.init = function() {
-	Homey.log("com.sensative running...");
+const Homey = require('homey');
+const Log = require('homey-log').Log;
+
+class SensativeZwave extends Homey.App {
+
+  onInit() {
+
+    this.log('Sensative Z-wave app is running...');
+
+  }
+
 }
+
+module.exports = SensativeZwave;

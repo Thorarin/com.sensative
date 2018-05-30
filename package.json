@@ -1,0 +1,26 @@
+{
+  "name": "com.sensative",
+  "version": "2.0.0",
+  "description": "This app adds support for the Z-wave Sensative strips family (http://www.sensative.com/).",
+  "main": "app.js",
+  "requires": true,
+  "dependencies": {
+    "homey-log": "^1.0.1",
+    "homey-meshdriver": "git+https://github.com/athombv/node-homey-meshdriver.git"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "run": "homeyConfig compose && athom project --run",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thorarin/com.sensative.git"
+  },
+  "author": "Marcel Veldhuizen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Thorarin/com.sensative/issues"
+  },
+  "homepage": "https://github.com/Thorarin/com.sensative/"
+}

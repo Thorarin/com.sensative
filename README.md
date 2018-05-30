@@ -1,7 +1,24 @@
-This app adds support for Sensative Strips in Homey.
+This app adds support for the Sensative Strips family of products in Homey.
+
+## Supported devices with most common parameters:
+* Strips Guard (door/window sensor)
+* Strips Drip
+* Strips Comfort
+
+## Supported Languages:
+* English
+* Dutch
 
 Release notes
 -------------
+
+**2.0.0:**
+* Support for notification command class for Strips Guard.
+  Using this instead of the binary sensor command class should fix an issue with devices with firmware 0.7 or older.
+* Add tamper alarm capability for Strips Guard
+* Preliminary support for Strips Drip and Strips Comfort
+* Upgraded to Homey SDK 2.0 
+  
 **1.0.3:**
 * Z-Wave configuration parameters should be properly initialized upon inclusion now.
 * Requires Homey 1.0.3 firmware due to an issue in combination with 1.0.1 and 1.0.2 firmwares.
