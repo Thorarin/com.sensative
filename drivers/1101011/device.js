@@ -30,7 +30,7 @@ class StripsMaZw extends ZwaveDevice {
 
     const settings = this.getSettings();
     this.registerAlarmContactCapability(settings.report_type);
-    this.registerCapability('measure_battery', 'BATTERY');
+    this.registerCapability('measure_battery', 'BATTERY', { getOpts: { getOnOnline: true } });
     this.registerOptionalCapabilities();
   }
 

@@ -5,7 +5,7 @@
   "main": "app.js",
   "requires": true,
   "dependencies": {
-    "homey-log": "^1.0.1",
+    "homey-log": "^1.0.6",
     "homey-meshdriver": "git+https://github.com/athombv/node-homey-meshdriver.git"
   },
   "devDependencies": {},
