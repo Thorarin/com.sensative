@@ -18,8 +18,8 @@
     "large": "/assets/images/large.png",
     "small": "/assets/images/small.png"
   },
-  "version": "2.0.0",
-  "compatibility": "1.x >=1.5.0",
+  "version": "2.0.1",
+  "compatibility": ">=1.5.0",
   "tags": {
     "en": [
       "security",
@@ -111,12 +111,20 @@
       "settings": [
         {
           "id": "report_type",
-          "value": "1",
-          "type": "dropdown",
           "zwave": {
             "index": 1,
             "size": 1
           },
+          "label": {
+            "en": "Notification type",
+            "nl": "Notificatietype"
+          },
+          "hint": {
+            "en": "Z-Wave command class used for reporting contact sensor events. Notification is typically best.",
+            "nl": "Z-Wave command class die gebruikt wordt voor rapportages van de contactsensor. Notification heeft meestal de voorkeur."
+          },
+          "type": "dropdown",
+          "value": "1",
           "values": [
             {
               "id": "0",
@@ -132,20 +140,10 @@
                 "nl": "Notification"
               }
             }
-          ],
-          "label": {
-            "en": "Notification type",
-            "nl": "Notificatietype"
-          },
-          "hint": {
-            "en": "Z-Wave command class used for reporting contact sensor events. Notification is typically best.",
-            "nl": "Z-Wave command class die gebruikt wordt voor rapportages van de contactsensor. Notification heeft meestal de voorkeur."
-          }
+          ]
         },
         {
           "id": "led_indication",
-          "type": "checkbox",
-          "value": true,
           "zwave": {
             "index": 2,
             "size": 1
@@ -157,7 +155,9 @@
           "hint": {
             "en": "When enabled, the LED on Strips will flash shortly when the door/window is opened.",
             "nl": "Wanneer ingeschakeld zal de led op Strips kort oplichten als de deur of het raam wordt geopened."
-          }
+          },
+          "type": "checkbox",
+          "value": true
         }
       ]
     },
@@ -205,8 +205,202 @@
       },
       "settings": [
         {
-          "id": 10,
-          "value": 40000,
+          "id": "led_indication",
+          "zwave": {
+            "index": 2,
+            "size": 1
+          },
+          "label": {
+            "en": "LED alarm event reporting",
+            "nl": "LED alarm event rapportage"
+          },
+          "type": "checkbox",
+          "value": true
+        },
+        {
+          "id": "reporting_frequency",
+          "zwave": {
+            "index": 3,
+            "size": 1
+          },
+          "label": {
+            "en": "Temperature & Light reporting frequency",
+            "nl": "Temperatuur & Light rapportage frequency"
+          },
+          "hint": {
+            "en": "Refer to the Sensative support site for details on how this affects the accuracy, number of reports and battery life",
+            "nl": "Kijk op de Sensative support site voor informatie over hoe dit accuraatheid, aantal rapportages en levensduur van de batterij beïnvloedt"
+          },
+          "type": "dropdown",
+          "value": "1",
+          "values": [
+            {
+              "id": "1",
+              "label": {
+                "en": "Normal",
+                "nl": "Normaal"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "Frequent",
+                "nl": "Frequent"
+              }
+            }
+          ]
+        },
+        {
+          "id": "temperature_reporting",
+          "zwave": {
+            "index": 4,
+            "size": 1
+          },
+          "label": {
+            "en": "Temperature reporting",
+            "nl": "Temperatuur rapportage"
+          },
+          "hint": {
+            "en": "Does not affect temperature alarms",
+            "nl": "Heeft geen invloed op temperatuuralarmering"
+          },
+          "type": "checkbox",
+          "value": true
+        },
+        {
+          "id": "temperature_unit",
+          "zwave": {
+            "index": 5,
+            "size": 1
+          },
+          "label": {
+            "en": "Temperature reporting unit",
+            "nl": "Temperatuur rapportage-eenheid"
+          },
+          "hint": {
+            "en": "This has no effect on how Homey displays the temperature",
+            "nl": "Dit heeft geen invloed op hoe Homey de temperatuur weergeeft"
+          },
+          "type": "dropdown",
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Celcius",
+                "nl": "Celcius"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "Fahrenheit",
+                "nl": "Fahrenheit"
+              }
+            }
+          ]
+        },
+        {
+          "id": "temperature_alarms",
+          "zwave": {
+            "index": 6,
+            "size": 1
+          },
+          "label": {
+            "en": "Temperature alarms",
+            "nl": "Temperatuuralarmering"
+          },
+          "type": "checkbox",
+          "value": false
+        },
+        {
+          "id": "temperature_high",
+          "zwave": {
+            "index": 7,
+            "size": 1
+          },
+          "label": {
+            "en": "High temperature alarm level",
+            "nl": "Hoge temperatuur alarm niveau"
+          },
+          "hint": {
+            "en": "-20 to +60 degrees Celcius",
+            "nl": "-20 tot +60 graden Celsius"
+          },
+          "type": "number",
+          "value": 60,
+          "attr": {
+            "min": -20,
+            "max": 60
+          }
+        },
+        {
+          "id": "temperature_low",
+          "zwave": {
+            "index": 8,
+            "size": 1
+          },
+          "label": {
+            "en": "Low temperature alarm level",
+            "nl": "Lage temperatuur alarm niveau"
+          },
+          "hint": {
+            "en": "-20 to +60 degrees Celcius",
+            "nl": "-20 tot +60 graden Celcius"
+          },
+          "type": "number",
+          "value": -20,
+          "attr": {
+            "min": -20,
+            "max": 60
+          }
+        },
+        {
+          "id": "light_reporting",
+          "zwave": {
+            "index": 9,
+            "size": 1
+          },
+          "value": "1",
+          "label": {
+            "en": "Ambient light reporting",
+            "nl": "Omgevingslicht rapportage"
+          },
+          "hint": {
+            "en": "Bounds are configured by high and low ambient light report level.",
+            "nl": "Bounds are configured by high and low ambient light report level."
+          },
+          "type": "dropdown",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Off",
+                "nl": "Uit"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "On",
+                "nl": "Aan"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "Only outside configured bounds",
+                "nl": "Alleen buiten ingestelde grenzen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "light_high",
+          "zwave": {
+            "index": 10,
+            "size": 4
+          },
           "label": {
             "en": "High ambient light report level",
             "nl": "High ambient light report level"
@@ -215,176 +409,88 @@
             "en": "3 to 64000",
             "nl": "3 tot 64000"
           },
-          "_size": 4,
-          "type": "number"
+          "type": "number",
+          "value": 40000,
+          "attr": {
+            "min": 3,
+            "max": 64000
+          }
         },
         {
-          "id": 11,
-          "value": 5000,
+          "id": "light_low",
+          "zwave": {
+            "index": 11,
+            "size": 4
+          },
           "label": {
-            "en": "Low ambient light report level (Must be significantly lower than parameter 10)",
-            "nl": "Low ambient light report level (Must be significantly lower than parameter 10)"
+            "en": "Low ambient light report level",
+            "nl": "Low ambient light report level"
           },
           "hint": {
-            "en": "1 to 42000",
-            "nl": "1 tot 42000"
+            "en": "1 to 42000. Must be significantly lower than high ambient light report level.",
+            "nl": "1 tot 42000. Must be significantly lower than high ambient light report level."
           },
-          "_size": 4,
-          "type": "number"
+          "type": "number",
+          "value": 5000,
+          "attr": {
+            "min": 1,
+            "max": 42000
+          }
         },
         {
-          "id": 12,
-          "value": true,
+          "id": "leakage_alarm",
+          "zwave": {
+            "index": 12,
+            "size": 1
+          },
           "label": {
             "en": "Leakage alarm",
             "nl": "Lekkage-alarm"
           },
-          "hint": {
-            "en": "0: Off\r\n1: On",
-            "nl": "0: Uit\r\n1: Aan"
-          },
-          "_size": 1,
-          "type": "checkbox"
+          "type": "checkbox",
+          "value": true
         },
         {
-          "id": 13,
-          "value": 10,
+          "id": "leakage_alarm_level",
+          "zwave": {
+            "index": 13,
+            "size": 1
+          },
           "label": {
             "en": "Leakage alarm level",
-            "nl": "Lekkage alarm level"
+            "nl": "Lekkage-alarm level"
           },
           "hint": {
-            "en": "1 to 100\r\n(1= almost dry, 100= wet)",
-            "nl": "1 tot 100\r\n(1= Bijna droog, 100= nat)"
+            "en": "1 to 100\r\n(1=almost dry, 100=wet)",
+            "nl": "1 tot 100\r\n(1=Bijna droog, 100=nat)"
           },
-          "_size": 1,
-          "type": "number"
+          "type": "number",
+          "value": 10,
+          "attr": {
+            "min": 1,
+            "max": 100
+          }
         },
         {
-          "id": 14,
-          "value": 0,
+          "id": "humidity_reporting_interval",
+          "zwave": {
+            "index": 14,
+            "size": 1
+          },
           "label": {
             "en": "Moisture reporting period",
             "nl": "Vochtigheid rapportageperiode"
           },
           "hint": {
-            "en": "0-120: Number of hours between moisture reports",
-            "nl": "0-120: Aantal uren tussen vochtigheidsrapportage"
+            "en": "0-120: Number of hours between moisture reports (0=off)",
+            "nl": "0-120: Aantal uren tussen vochtigheidsrapportage (0=uit)"
           },
-          "_size": 1,
-          "type": "number"
-        },
-        {
-          "id": 2,
-          "value": true,
-          "label": {
-            "en": "LED alarm event reporting",
-            "nl": "LED alarm event rapportage"
-          },
-          "hint": {
-            "en": "0: Off\r\n1: On",
-            "nl": "0: Uit\r\n1: Aan"
-          },
-          "_size": 1,
-          "type": "checkbox"
-        },
-        {
-          "id": 3,
-          "value": 1,
-          "label": {
-            "en": "Temperature & Light reporting frequency",
-            "nl": "Temperatuur & Light rapportage frequency"
-          },
-          "hint": {
-            "en": "1: Normal\r\n2: Frequent",
-            "nl": "1: Normaal\r\n2: Frequent"
-          },
-          "_size": 1,
-          "type": "number"
-        },
-        {
-          "id": 4,
-          "value": true,
-          "label": {
-            "en": "Temperature reporting (Does not affect temperature alarms)",
-            "nl": "Temperatuur rapportage (Does not affect temperature alarms)"
-          },
-          "hint": {
-            "en": "0: Off\r\n1: On",
-            "nl": "0: Uit\r\n1: Aan"
-          },
-          "_size": 1,
-          "type": "checkbox"
-        },
-        {
-          "id": 5,
-          "value": true,
-          "label": {
-            "en": "Temperature reporting unit",
-            "nl": "Temperatuur rapportage eenheid"
-          },
-          "hint": {
-            "en": "0: Celcius\r\n1: Fahrenheit",
-            "nl": "0: Celcius\r\n1: Fahrenheit"
-          },
-          "_size": 1,
-          "type": "checkbox"
-        },
-        {
-          "id": 6,
-          "value": false,
-          "label": {
-            "en": "Temperature alarms",
-            "nl": "temperatuur alarms"
-          },
-          "hint": {
-            "en": "0: Off\r\n1: On",
-            "nl": "0: Uit\r\n1: Aan"
-          },
-          "_size": 1,
-          "type": "checkbox"
-        },
-        {
-          "id": 7,
-          "value": 60,
-          "label": {
-            "en": "High Temperature alarm level",
-            "nl": "Hoge Temperatuur alarm niveau"
-          },
-          "hint": {
-            "en": "-20 to +60 degrees Celcius",
-            "nl": "-20 tot +60 graden Celsius"
-          },
-          "_size": 1,
-          "type": "number"
-        },
-        {
-          "id": 8,
-          "value": -20,
-          "label": {
-            "en": "Low Temperature alarm level",
-            "nl": "Laag Temperatuur alarm nivo"
-          },
-          "hint": {
-            "en": "-20 to +60 degrees Celcius",
-            "nl": "-20 tot +60 graden Celcius"
-          },
-          "_size": 1,
-          "type": "number"
-        },
-        {
-          "id": 9,
-          "value": 1,
-          "label": {
-            "en": "Ambient light reporting",
-            "nl": "Omgevingslicht rapportage"
-          },
-          "hint": {
-            "en": "0: Off\r\n1: On\r\n2: Report only when levels defined in parameter 10 & 11 are passed.",
-            "nl": "0: Uit\r\n1: Aan\r\n2: Report only when levels defined in parameter 10 & 11 are passed."
-          },
-          "_size": 1,
-          "type": "number"
+          "type": "number",
+          "value": 0,
+          "attr": {
+            "min": 0,
+            "max": 120
+          }
         }
       ]
     }
