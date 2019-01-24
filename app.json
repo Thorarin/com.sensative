@@ -19,7 +19,7 @@
     "small": "/assets/images/small.png"
   },
   "version": "2.0.0",
-  "compatibility": "1.x >=1.5.0",
+  "compatibility": ">=1.5.0",
   "tags": {
     "en": [
       "security",
@@ -205,7 +205,7 @@
       },
       "settings": [
         {
-          "id": 2,
+          "id": "led_indication",
           "zwave": {
             "index": 2,
             "size": 1
@@ -218,7 +218,7 @@
           "value": true
         },
         {
-          "id": 3,
+          "id": "reporting_frequency",
           "zwave": {
             "index": 3,
             "size": 1
@@ -226,6 +226,10 @@
           "label": {
             "en": "Temperature & Light reporting frequency",
             "nl": "Temperatuur & Light rapportage frequency"
+          },
+          "hint": {
+            "en": "Refer to the Sensative support site for details on how this affects the accuracy, number of reports and battery life",
+            "nl": "Kijk op de Sensative support site voor informatie over hoe dit accuraatheid, aantal rapportages en levensduur van de batterij beïnvloedt"
           },
           "type": "dropdown",
           "value": "1",
@@ -247,20 +251,24 @@
           ]
         },
         {
-          "id": 4,
+          "id": "temperature_reporting",
           "zwave": {
             "index": 4,
             "size": 1
           },
           "label": {
-            "en": "Temperature reporting (Does not affect temperature alarms)",
-            "nl": "Temperatuur rapportage (Does not affect temperature alarms)"
+            "en": "Temperature reporting",
+            "nl": "Temperatuur rapportage"
+          },
+          "hint": {
+            "en": "Does not affect temperature alarms",
+            "nl": "Heeft geen invloed op temperatuuralarmering"
           },
           "type": "checkbox",
           "value": true
         },
         {
-          "id": 5,
+          "id": "temperature_unit",
           "zwave": {
             "index": 5,
             "size": 1
@@ -268,6 +276,10 @@
           "label": {
             "en": "Temperature reporting unit",
             "nl": "Temperatuur rapportage-eenheid"
+          },
+          "hint": {
+            "en": "This has no effect on how Homey displays the temperature",
+            "nl": "Dit heeft geen invloed op hoe Homey de temperatuur weergeeft"
           },
           "type": "dropdown",
           "value": "0",
@@ -289,7 +301,7 @@
           ]
         },
         {
-          "id": 6,
+          "id": "temperature_alarms",
           "zwave": {
             "index": 6,
             "size": 1
@@ -302,7 +314,7 @@
           "value": false
         },
         {
-          "id": 7,
+          "id": "temperature_high",
           "zwave": {
             "index": 7,
             "size": 1
@@ -323,7 +335,7 @@
           }
         },
         {
-          "id": 8,
+          "id": "temperature_low",
           "zwave": {
             "index": 8,
             "size": 1
@@ -344,7 +356,7 @@
           }
         },
         {
-          "id": 9,
+          "id": "light_reporting",
           "zwave": {
             "index": 9,
             "size": 1
@@ -384,7 +396,7 @@
           ]
         },
         {
-          "id": 10,
+          "id": "light_high",
           "zwave": {
             "index": 10,
             "size": 4
@@ -405,7 +417,7 @@
           }
         },
         {
-          "id": 11,
+          "id": "light_low",
           "zwave": {
             "index": 11,
             "size": 4
@@ -426,7 +438,7 @@
           }
         },
         {
-          "id": 12,
+          "id": "leakage_alarm",
           "zwave": {
             "index": 12,
             "size": 1
@@ -439,7 +451,7 @@
           "value": true
         },
         {
-          "id": 13,
+          "id": "leakage_alarm_level",
           "zwave": {
             "index": 13,
             "size": 1
@@ -460,7 +472,7 @@
           }
         },
         {
-          "id": 14,
+          "id": "humidity_reporting_interval",
           "zwave": {
             "index": 14,
             "size": 1
