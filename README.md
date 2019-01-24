@@ -11,6 +11,8 @@ This app adds support for the Sensative Strips family of products in Homey.
 
 Release notes
 -------------
+**2.0.1:**
+* Fixed a number of issues with Strips Drip and Strips Comfort
 
 **2.0.0:**
 * Support for notification command class for Strips Guard.
