@@ -25,6 +25,12 @@ function luminanceReportParser(report) {
 
 class StripsMultiSensor extends ZwaveDevice {
   onMeshInit() {
+
+    // Reset alarms on init, since these alarms tend to stick in true state.
+    // The user can then restart the app, to get rid of sticky alarms.
+    this.setCapabilityValue('alarm_water', false);
+    this.setCapabilityValue('alarm_heat', false);
+
     this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL', {
       getOpts: {
         getOnOnline: true,
