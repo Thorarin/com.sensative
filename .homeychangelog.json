@@ -1,0 +1,17 @@
+{
+  "2.1.0": {
+    "en": "Fixed an issue with Strips Comfort heat alarm (thanks Vegard!)\r\nAdded maintenance actions to reset alarms manually (requires Homey 3.1+)\r\nAdded battery information for all supported devices"
+  },
+  "2.0.1": {
+    "en": "Fixed a number of issues with Strips Drip and Strips Comfort"
+  },
+  "2.0.0": {
+    "en": "Support for notification command class for Strips Guard.\r\nUsing this instead of the binary sensor command class should fix an issue with devices with firmware 0.7 or older.\r\nAdd tamper alarm capability for Strips Guard\r\nPreliminary support for Strips Drip and Strips Comfort\r\nUpgraded to Homey SDK 2.0"
+  },
+  "1.0.3": {
+    "en": "Z-Wave configuration parameters should be properly initialized upon inclusion now.\r\nRequires Homey 1.0.3 firmware due to an issue in combination with 1.0.1 and 1.0.2 firmwares."
+  },
+  "1.0.1": {
+    "en": "In this initial version, Strips will be set to a simple binary sensor. I'd like to switch to using its default operating mode in the future, which may require the device to be re-added.\r\nThe US version of Strips is not yet recognized. It may be added in a future version (testers needed)."
+  }
+}

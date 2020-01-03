@@ -10,7 +10,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "run": "athom app run",
+    "run": "homey app run",
     "lint": "eslint **/*.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,7 +19,7 @@
     "url": "git+https://github.com/Thorarin/com.sensative.git"
   },
   "author": "Marcel Veldhuizen",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Thorarin/com.sensative/issues"
   },
