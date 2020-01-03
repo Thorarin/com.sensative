@@ -56,6 +56,12 @@
       }
     ]
   },
+  "bugs": {
+    "url": "https://github.com/Thorarin/com.sensative/issues"
+  },
+  "source": "https://github.com/Thorarin/com.sensative",
+  "homepage": "https://homey.app",
+  "support": "mailto:sensative@thorarin.net",
   "drivers": [
     {
       "id": "1101011",
