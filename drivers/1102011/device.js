@@ -25,12 +25,6 @@ function luminanceReportParser(report) {
 
 class StripsMultiSensor extends ZwaveDevice {
   onMeshInit() {
-
-    // Reset alarms on init, since these alarms tend to stick in true state.
-    // The user can then restart the app, to get rid of sticky alarms.
-    this.setCapabilityValue('alarm_water', false);
-    this.setCapabilityValue('alarm_heat', false);
-
     this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL', {
       getOpts: {
         getOnOnline: true,
@@ -86,6 +80,23 @@ class StripsMultiSensor extends ZwaveDevice {
         getOnOnline: true,
       },
     });
+
+    this.registerMaintenanceActions();
   }
+
+  async registerMaintenanceActions() {
+    const capabilities = this.getCapabilities();
+
+    if (!capabilities.includes('button.reset_heat_alarm')) {
+      await this.addCapability('button.reset_heat_alarm');
+    }
+
+    if (!capabilities.includes('button.reset_water_alarm')) {
+      await this.addCapability('button.reset_water_alarm');
+    }
+
+    this.registerCapabilityListener('button.reset_heat_alarm', () => this.setCapabilityValue('alarm_heat', false));
+    this.registerCapabilityListener('button.reset_water_alarm', () => this.setCapabilityValue('alarm_water', false));
+  }  
 }
 module.exports = StripsMultiSensor;

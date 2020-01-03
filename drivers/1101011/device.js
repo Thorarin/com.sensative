@@ -32,6 +32,7 @@ class StripsMaZw extends ZwaveDevice {
     this.registerAlarmContactCapability(settings.report_type);
     this.registerCapability('measure_battery', 'BATTERY', { getOpts: { getOnOnline: true } });
     this.registerOptionalCapabilities();
+    this.registerMaintenanceActions();
   }
 
   /**
@@ -76,6 +77,16 @@ class StripsMaZw extends ZwaveDevice {
         this.registerCapability('alarm_contact', 'NOTIFICATION');
         break;
     }
+  }
+
+  async registerMaintenanceActions() {
+    const capabilities = this.getCapabilities();
+
+    if (!capabilities.includes('button.reset_tamper_alarm')) {
+      await this.addCapability('button.reset_tamper_alarm');
+    }
+
+    this.registerCapabilityListener('button.reset_tamper_alarm', () => this.setCapabilityValue('alarm_tamper', false));
   }
 }
 
