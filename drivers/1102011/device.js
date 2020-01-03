@@ -1,6 +1,6 @@
 'use strict';
 
-const ZwaveDevice = require('homey-meshdriver').ZwaveDevice;
+const StripsZwaveDevice = require('../StripsZwaveDevice');
 
 function luminanceReportParser(report) {
   const isLuminanceReport =
@@ -23,8 +23,8 @@ function luminanceReportParser(report) {
   return sensorValue;
 }
 
-class StripsMultiSensor extends ZwaveDevice {
-  onMeshInit() {
+class StripsMultiSensor extends StripsZwaveDevice {
+  async onMeshInit() {
     this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL', {
       getOpts: {
         getOnOnline: true,
@@ -81,19 +81,11 @@ class StripsMultiSensor extends ZwaveDevice {
       },
     });
 
-    this.registerMaintenanceActions();
+    await this.registerMaintenanceActions();
   }
 
   async registerMaintenanceActions() {
-    const capabilities = this.getCapabilities();
-
-    if (!capabilities.includes('button.reset_heat_alarm')) {
-      await this.addCapability('button.reset_heat_alarm');
-    }
-
-    if (!capabilities.includes('button.reset_water_alarm')) {
-      await this.addCapability('button.reset_water_alarm');
-    }
+    await this.ensureCapabilitiesAdded(['button.reset_heat_alarm', 'button.reset_water_alarm']);
 
     this.registerCapabilityListener('button.reset_heat_alarm', () => this.setCapabilityValue('alarm_heat', false));
     this.registerCapabilityListener('button.reset_water_alarm', () => this.setCapabilityValue('alarm_water', false));

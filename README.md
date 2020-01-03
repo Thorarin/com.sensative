@@ -11,6 +11,12 @@ This app adds support for the Sensative Strips family of products in Homey.
 
 Release notes
 -------------
+**2.1.0:**
+* Fixed an issue with Strips Comfort heat alarm (thanks Vegard!)
+* Added maintenance actions to reset alarms manually (requires Homey 3.1+)
+* Added battery information for all supported devices
+* Updated to latest homey-meshdriver (1.3.3)
+
 **2.0.1:**
 * Fixed a number of issues with Strips Drip and Strips Comfort
 
