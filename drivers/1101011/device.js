@@ -1,6 +1,6 @@
 'use strict';
 
-const ZwaveDevice = require('homey-meshdriver').ZwaveDevice;
+const StripsZwaveDevice = require('../StripsZwaveDevice');
 
 const i18n = {
   settings: {
@@ -23,33 +23,23 @@ function tamperReportParser(report) {
   return null;
 }
 
-class StripsMaZw extends ZwaveDevice {
-  onMeshInit() {
+class StripsMaZw extends StripsZwaveDevice {
+  async onMeshInit() {
     this.registerSetting('report_type', value => new Buffer([parseInt(value)]));
     this.registerSetting('led_indication', value => new Buffer([value ? 1 : 0]));
 
     const settings = this.getSettings();
     this.registerAlarmContactCapability(settings.report_type);
     this.registerCapability('measure_battery', 'BATTERY', { getOpts: { getOnOnline: true } });
-    this.registerOptionalCapabilities();
+
+    await this.ensureCapabilitiesAdded(['alarm_battery', 'alarm_tamper', 'button.reset_tamper_alarm']);
+    this.registerBatteryCapabilities();
+    this.registerMaintenanceActions();
   }
 
-  /**
-	 * Register capabilities which may not be advertised on the node when it was registed using an older version of the driver.
-	 * At first glance, registering these unconditionally doesn't appear to be a problem, but warning messages about unobserved
-   * rejected promises were appearing when the node was being removed. Apparently in future versions this will cause the app
-   * to crash, so this is just to be on the safe side...
-	 */
-  registerOptionalCapabilities() {
-    const capabilities = this.getCapabilities();
-
-    if (capabilities.includes('alarm_battery')) {
-      this.registerCapability('alarm_battery', 'BATTERY');
-    }
-
-    if (capabilities.includes('alarm_tamper')) {
-      this.registerCapability('alarm_tamper', 'NOTIFICATION', { reportParser: tamperReportParser });
-    }
+  registerBatteryCapabilities() {
+    this.registerCapability('alarm_battery', 'BATTERY');
+    this.registerCapability('alarm_tamper', 'NOTIFICATION', { reportParser: tamperReportParser });
   }
 
   async onSettings(oldSettings, newSettings, changedKeysArr) {
@@ -69,13 +59,24 @@ class StripsMaZw extends ZwaveDevice {
         this.log('Using SENSOR_BINARY command class');
         this.registerCapability('alarm_contact', 'SENSOR_BINARY');
         break;
-      default:
-        this.log('No valid notification type set.')
       case '1':
-        this.log('Using NOTIFICATION command class')
+        this.log('Using NOTIFICATION command class');
         this.registerCapability('alarm_contact', 'NOTIFICATION');
         break;
+      default:
+        this.log('No valid notification type set.');
+        break;
     }
+  }
+
+  async registerMaintenanceActions() {
+    const capabilities = this.getCapabilities();
+
+    if (!capabilities.includes('button.reset_tamper_alarm')) {
+      await this.addCapability('button.reset_tamper_alarm');
+    }
+
+    this.registerCapabilityListener('button.reset_tamper_alarm', () => this.setCapabilityValue('alarm_tamper', false));
   }
 }
 

@@ -18,8 +18,8 @@
     "large": "/assets/images/large.png",
     "small": "/assets/images/small.png"
   },
-  "version": "2.0.1",
-  "compatibility": ">=1.5.0",
+  "version": "2.1.0",
+  "compatibility": ">=1.5.6",
   "tags": {
     "en": [
       "security",
@@ -102,8 +102,25 @@
         "alarm_contact",
         "alarm_tamper",
         "measure_battery",
-        "alarm_battery"
+        "alarm_battery",
+        "button.reset_tamper_alarm"
       ],
+      "capabilitiesOptions": {
+        "button.reset_tamper_alarm": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Reset tamper alarm",
+            "nl": "Sabotage-alarm resetten"
+          },
+          "desc": {
+            "en": "Manually reset the tamper alarm after it has been triggered.",
+            "nl": "Schakel het sabotage-alarm handmatig uit nadat deze is getriggerd."
+          }
+        }
+      },
+      "energy": {
+        "batteries": [ "INTERNAL" ]
+      },
       "images": {
         "large": "/drivers/1101011/assets/images/large.jpg",
         "small": "/drivers/1101011/assets/images/small.jpg"
@@ -197,8 +214,37 @@
         "alarm_heat",
         "alarm_water",
         "measure_battery",
-        "alarm_battery"
+        "alarm_battery",
+        "button.reset_heat_alarm",
+        "button.reset_water_alarm"
       ],
+      "capabilitiesOptions": {
+        "button.reset_heat_alarm": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Reset heat alarm",
+            "nl": "Hitte-alarm resetten"
+          },
+          "desc": {
+            "en": "Manually reset the heat alarm after it has been triggered.",
+            "nl": "Schakel het hitte-alarm handmatig uit nadat deze is getriggerd."
+          }
+        },
+        "button.reset_water_alarm": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Reset water alarm",
+            "nl": "wateralarm resetten"
+          },
+          "desc": {
+            "en": "Manually reset the water alarm after it has been triggered.",
+            "nl": "Schakel het wateralarm handmatig uit nadat deze is getriggerd."
+          }
+        }
+      },
+      "energy": {
+        "batteries": [ "INTERNAL" ]
+      },
       "images": {
         "large": "/drivers/1102011/assets/images/large.jpg",
         "small": "/drivers/1102011/assets/images/small.jpg"
