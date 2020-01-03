@@ -104,6 +104,9 @@
         "measure_battery",
         "alarm_battery"
       ],
+      "energy": {
+        "batteries": [ "INTERNAL" ]
+      },
       "images": {
         "large": "/drivers/1101011/assets/images/large.jpg",
         "small": "/drivers/1101011/assets/images/small.jpg"
@@ -199,6 +202,9 @@
         "measure_battery",
         "alarm_battery"
       ],
+      "energy": {
+        "batteries": [ "INTERNAL" ]
+      },
       "images": {
         "large": "/drivers/1102011/assets/images/large.jpg",
         "small": "/drivers/1102011/assets/images/small.jpg"
