@@ -25,6 +25,12 @@ function luminanceReportParser(report) {
 
 class StripsMultiSensor extends ZwaveDevice {
   onMeshInit() {
+
+    // Reset alarms on init, since these alarms tend to stick in true state.
+    // The user can then restart the app, to get rid of sticky alarms.
+    this.setCapabilityValue('alarm_water', false);
+    this.setCapabilityValue('alarm_heat', false);
+
     this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL', {
       getOpts: {
         getOnOnline: true,
@@ -45,6 +51,29 @@ class StripsMultiSensor extends ZwaveDevice {
     });
 
     this.registerCapability('alarm_heat', 'NOTIFICATION', {
+      reportParser: report => { 
+
+        // Check Notification Type and event to ensure that the heat alarm should go on/off
+
+        // Heat alarm ON (event 2 = overheat, event 6 = underheat)
+        if (report["Notification Type"] === "Heat" && report["Event"] === 2) {
+          return true
+        }
+
+        // Heat alarm ON (event 2 = overheat, event 6 = underheat)
+        if (report["Notification Type"] === "Heat" && report["Event"] === 6) {
+          return true
+        }
+
+        // Heat alarm OFF
+        if (report["Notification Type"] === "Heat" && report["Event"] === 0) {
+          return false
+        }
+
+        // No matching events, just return null
+        return null;
+
+      },
       getOpts: {
         getOnOnline: true,
       },
