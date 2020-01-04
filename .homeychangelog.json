@@ -1,5 +1,5 @@
 {
-  "2.1.2": {
+  "2.1.3": {
     "en": "Fixed an issue with Strips Comfort heat alarm.\r\nFixed an issue with humidity reporting for Strips Drip.\r\nAdded maintenance actions to reset alarms manually.\r\nAdded battery information for all supported devices."
   },
   "2.0.1": {
