@@ -1,6 +1,6 @@
 {
-  "2.1.0": {
-    "en": "Fixed an issue with Strips Comfort heat alarm (thanks Vegard!)\r\nAdded maintenance actions to reset alarms manually (requires Homey 3.1+)\r\nAdded battery information for all supported devices"
+  "2.1.2": {
+    "en": "Fixed an issue with Strips Comfort heat alarm.\r\nFixed an issue with humidity reporting for Strips Drip.\r\nAdded maintenance actions to reset alarms manually.\r\nAdded battery information for all supported devices."
   },
   "2.0.1": {
     "en": "Fixed a number of issues with Strips Drip and Strips Comfort"
