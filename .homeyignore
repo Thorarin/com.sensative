@@ -1,4 +1,4 @@
 /node_modules/homey-meshdriver/examples
-/node_modules/homey-meshdriver/zigbee
-/README.md
+/node_modules/homey-meshdriver/lib/zigbee
 *.psd
+/*.png
