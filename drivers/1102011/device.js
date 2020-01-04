@@ -39,6 +39,12 @@ class StripsMultiSensor extends StripsZwaveDevice {
     });
     
     this.registerCapability('measure_humidity', 'SENSOR_MULTILEVEL', {
+      reportParser: report => {
+        if (report['Sensor Type'] === 'Moisture (v5)') {
+          return report['Sensor Value (Parsed)'];
+        }
+        return null;
+      },
       getOpts: {
         getOnOnline: true,
       },
