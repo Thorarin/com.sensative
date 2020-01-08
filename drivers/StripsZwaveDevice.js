@@ -17,6 +17,21 @@ class StripsZwaveDevice extends ZwaveDevice {
       }
     }
   }
+  
+  async ensureCapabilitiesRemoved(capabilityIds) {
+    const capabilities = this.getCapabilities();
+
+    for (const capabilityId of capabilityIds) {
+      if (!capabilities.includes(capabilityId)) continue;
+
+      if (this.removeCapability) {
+        this.log(`Removing capability ${capabilityId}`);
+        await this.removeCapability(capabilityId);
+      } else {
+        this.log(`Unable to remove capability ${capabilityId}; probably running an older Homey firmware.`);
+      }
+    }
+  }  
 }
 
 module.exports = StripsZwaveDevice;

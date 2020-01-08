@@ -87,14 +87,7 @@ class StripsMultiSensor extends StripsZwaveDevice {
       },
     });
 
-    await this.registerMaintenanceActions();
+    await this.ensureCapabilitiesRemoved(['button.reset_heat_alarm', 'button.reset_water_alarm']);
   }
-
-  async registerMaintenanceActions() {
-    await this.ensureCapabilitiesAdded(['button.reset_heat_alarm', 'button.reset_water_alarm']);
-
-    this.registerCapabilityListener('button.reset_heat_alarm', () => this.setCapabilityValue('alarm_heat', false));
-    this.registerCapabilityListener('button.reset_water_alarm', () => this.setCapabilityValue('alarm_water', false));
-  }  
 }
 module.exports = StripsMultiSensor;

@@ -32,9 +32,10 @@ class StripsMaZw extends StripsZwaveDevice {
     this.registerAlarmContactCapability(settings.report_type);
     this.registerCapability('measure_battery', 'BATTERY', { getOpts: { getOnOnline: true } });
 
-    await this.ensureCapabilitiesAdded(['alarm_battery', 'alarm_tamper', 'button.reset_tamper_alarm']);
+    await this.ensureCapabilitiesAdded(['alarm_battery', 'alarm_tamper']);
     this.registerBatteryCapabilities();
-    this.registerMaintenanceActions();
+
+    await this.ensureCapabilitiesRemoved(['button.reset_tamper_alarm']);
   }
 
   registerBatteryCapabilities() {
@@ -67,16 +68,6 @@ class StripsMaZw extends StripsZwaveDevice {
         this.log('No valid notification type set.');
         break;
     }
-  }
-
-  async registerMaintenanceActions() {
-    const capabilities = this.getCapabilities();
-
-    if (!capabilities.includes('button.reset_tamper_alarm')) {
-      await this.addCapability('button.reset_tamper_alarm');
-    }
-
-    this.registerCapabilityListener('button.reset_tamper_alarm', () => this.setCapabilityValue('alarm_tamper', false));
   }
 }
 

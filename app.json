@@ -108,22 +108,8 @@
         "alarm_contact",
         "alarm_tamper",
         "measure_battery",
-        "alarm_battery",
-        "button.reset_tamper_alarm"
+        "alarm_battery"
       ],
-      "capabilitiesOptions": {
-        "button.reset_tamper_alarm": {
-          "maintenanceAction": true,
-          "title": {
-            "en": "Reset tamper alarm",
-            "nl": "Sabotage-alarm resetten"
-          },
-          "desc": {
-            "en": "Manually reset the tamper alarm after it has been triggered.",
-            "nl": "Schakel het sabotage-alarm handmatig uit nadat deze is getriggerd."
-          }
-        }
-      },
       "energy": {
         "batteries": [ "INTERNAL" ]
       },
@@ -220,34 +206,8 @@
         "alarm_heat",
         "alarm_water",
         "measure_battery",
-        "alarm_battery",
-        "button.reset_heat_alarm",
-        "button.reset_water_alarm"
+        "alarm_battery"
       ],
-      "capabilitiesOptions": {
-        "button.reset_heat_alarm": {
-          "maintenanceAction": true,
-          "title": {
-            "en": "Reset heat alarm",
-            "nl": "Hitte-alarm resetten"
-          },
-          "desc": {
-            "en": "Manually reset the heat alarm after it has been triggered.",
-            "nl": "Schakel het hitte-alarm handmatig uit nadat deze is getriggerd."
-          }
-        },
-        "button.reset_water_alarm": {
-          "maintenanceAction": true,
-          "title": {
-            "en": "Reset water alarm",
-            "nl": "wateralarm resetten"
-          },
-          "desc": {
-            "en": "Manually reset the water alarm after it has been triggered.",
-            "nl": "Schakel het wateralarm handmatig uit nadat deze is getriggerd."
-          }
-        }
-      },
       "energy": {
         "batteries": [ "INTERNAL" ]
       },
