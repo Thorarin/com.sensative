@@ -1,6 +1,16 @@
 'use strict';
 
+const Homey = require('homey');
 const ZwaveDevice = require('homey-meshdriver').ZwaveDevice;
+
+const i18n = {
+  settings: {
+    restartNeeded: {
+      en: 'Restart the Sensative app for changes to take effect. You may also need to restart your Homey app if you get a blank screen.',
+      nl: 'Herstart de Sensative app om de wijzigingen door te voeren. Het zou kunnen dat u de Homey app moet herstarten, als u een leeg scherm krijgt.'
+    }
+  }
+};
 
 function tamperReportParser(report) {
   if (report && report['Notification Type'] === 'Home Security' && report.hasOwnProperty('Event (Parsed)')) {
@@ -25,20 +35,11 @@ class StripsZwaveDevice extends ZwaveDevice {
       this.tryRemoveCapability(capability);
     }
 
-    for (const capability of capabilitiesToAdd)  {
+    for (const capability of capabilitiesToAdd) {
       this.tryAddCapability(capability);
     }
 
     return capabilitiesToAdd;
-  }
-
-  async ensureCapabilitiesAdded(capabilityIds) {
-    const capabilities = this.getCapabilities();
-
-    for (const capabilityId of capabilityIds) {
-      if (capabilities.includes(capabilityId)) continue;
-      this.tryAddCapability(capabilityId);
-    }
   }
 
   async tryAddCapability(capabilityId) {
@@ -50,15 +51,6 @@ class StripsZwaveDevice extends ZwaveDevice {
     }
   }
 
-  async ensureCapabilitiesRemoved(capabilityIds) {
-    const capabilities = this.getCapabilities();
-
-    for (const capabilityId of capabilityIds) {
-      if (!capabilities.includes(capabilityId)) continue;
-      this.tryRemoveCapability(capabilityId);
-    }
-  }
-
   async tryRemoveCapability(capabilityId) {
     if (this.removeCapability) {
       this.log(`Removing capability ${capabilityId}`);
@@ -66,7 +58,7 @@ class StripsZwaveDevice extends ZwaveDevice {
     } else {
       this.log(`Unable to remove capability ${capabilityId}; probably running an older Homey firmware.`);
     }
-  }  
+  }
 
   async registerMaintenanceActions(actions) {
     const actionCapabilityIds = Object.keys(actions);
@@ -91,6 +83,12 @@ class StripsZwaveDevice extends ZwaveDevice {
     return capabilities;
   }
 
+  determineCapabilitiesChanging(oldSettings, newSettings) {
+    const prev = this.determineCapabilityIds(oldSettings);
+    const next = this.determineCapabilityIds(newSettings);
+    return prev.length !== next.length || prev.some((value, index) => value !== next[index]);
+  }
+
   registerBatteryCapabilities() {
     this.registerCapability('measure_battery', 'BATTERY', { getOpts: { getOnOnline: true } });
     this.registerCapability('alarm_battery', 'BATTERY');
@@ -98,7 +96,19 @@ class StripsZwaveDevice extends ZwaveDevice {
 
   registerTamperAlarmCapability() {
     this.registerCapability('alarm_tamper', 'NOTIFICATION', { reportParser: tamperReportParser });
-  }  
+  }
+
+  async onSettings(oldSettings, newSettings, changedKeysArr) {
+    const zwaveSettingsChanged = this.getManifestSettings()
+      .some(setting => typeof setting.zwave !== 'undefined' && changedKeysArr.includes(setting.id));
+
+    let message = await super.onSettings(oldSettings, newSettings, changedKeysArr);
+    if (!zwaveSettingsChanged && this.determineCapabilitiesChanging(oldSettings, newSettings)) {
+      message = Homey.__(i18n.settings.restartNeeded);
+    }
+
+    return message;
+  }
 }
 
 module.exports = StripsZwaveDevice;

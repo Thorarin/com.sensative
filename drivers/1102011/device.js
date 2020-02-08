@@ -41,31 +41,29 @@ class StripsMultiSensor extends StripsZwaveDevice {
       capabilities.push('button.reset_heat_alarm');
     }
 
-    if (settings.device_type === 'comfort') {
+    if (settings.device_type !== 'drip') {
       capabilities.push('measure_luminance');
-    } else {
+    }
+
+    if (settings.device_type !== 'comfort') {
       capabilities.push('measure_humidity', 'alarm_water');
       if (settings.maintenance_actions) {
         capabilities.push('button.reset_water_alarm');
       }
     }
 
-    const a = capabilities.concat(super.determineCapabilityIds(settings));
-    this.log(JSON.stringify(a));
-    return a;
+    return capabilities.concat(super.determineCapabilityIds(settings));
   }
 
-  async onSettings(oldSettings, newSettings, changedKeysArr) {
-    let result = await super.onSettings(oldSettings, newSettings, changedKeysArr);
-
-    this.registerDynamicCapabilities(newSettings, false);
-
-    if (changedKeysArr.includes('maintenance_actions')) {
-      await this.updateMaintenanceActionRegistrations(newSettings.maintenance_actions);
-    }
-
-    return result;
-  }
+  // Changing capabilities here seems to crash the Homey App UI on most occasions.
+  // async onSettings(oldSettings, newSettings, changedKeysArr) {
+  //   let result = await super.onSettings(oldSettings, newSettings, changedKeysArr);
+  //   await this.registerDynamicCapabilities(newSettings, false);
+  //   if (changedKeysArr.includes('maintenance_actions')) {
+  //     this.updateMaintenanceActionRegistrations();
+  //   }
+  //   return result;
+  // }
 
   registerTemperatureCapability() {
     this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL', {

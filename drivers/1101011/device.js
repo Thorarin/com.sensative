@@ -32,13 +32,15 @@ class StripsMaZw extends StripsZwaveDevice {
   async onSettings(oldSettings, newSettings, changedKeysArr) {
     let result = await super.onSettings(oldSettings, newSettings, changedKeysArr);
 
+    // Changing capabilities here seems to crash the Homey App UI on most occasions.
+    //await this.registerDynamicCapabilities(newSettings, false);
+    // if (changedKeysArr.includes('maintenance_actions')) {
+    //   this.updateMaintenanceActionRegistrations();
+    // }
+
     if (changedKeysArr.includes('report_type')) {
       this.registerAlarmContactCapability(newSettings.report_type);
       return i18n.settings.notificationTypeChangedSaveMessage;
-    }
-
-    if (changedKeysArr.includes('maintenance_actions')) {
-      await this.updateMaintenanceActionRegistrations();
     }
 
     return result;
