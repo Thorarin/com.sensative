@@ -181,6 +181,41 @@
           },
           "type": "checkbox",
           "value": true
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Capabilities",
+            "nl": "Functies"
+          },
+          "children": [
+            {
+              "id": "tamper_alarm",
+              "label": {
+                "en": "Tamper alarm",
+                "nl": "Sabotage-alarm"
+              },
+              "hint": {
+                "en": "Used to show or hide the tamper alarm capability.",
+                "nl": "Hiermee kan de sabotage-alarmfunctie getoond of verborgen worden."
+              },
+              "type": "checkbox",
+              "value": true
+            },
+            {
+              "id": "maintenance_actions",
+              "label": {
+                "en": "Maintenance actions",
+                "nl": "Maintenance actions"
+              },
+              "hint": {
+                "en": "Disabling this hides maintenance actions on this device. Maintenance actions are known to confuse HomeyKit, classifying the sensor as a switch.",
+                "nl": "Wanneer uitgeschakeld worden de onderhoudsacties voor dit apparaat verborgen. Onderhoudsacties verwarren HomeyKit, waardoor de sensor als schakelaar geclassificeerd wordt."
+              },
+              "type": "checkbox",
+              "value": true
+            }
+          ]
         }
       ]
     },
@@ -221,8 +256,10 @@
         "alarm_water",
         "measure_battery",
         "alarm_battery",
+        "alarm_tamper",
         "button.reset_heat_alarm",
-        "button.reset_water_alarm"
+        "button.reset_water_alarm",
+        "button.reset_tamper_alarm"
       ],
       "capabilitiesOptions": {
         "button.reset_heat_alarm": {
@@ -245,6 +282,17 @@
           "desc": {
             "en": "Manually reset the water alarm after it has been triggered.",
             "nl": "Schakel het wateralarm handmatig uit nadat deze is getriggerd."
+          }
+        },
+        "button.reset_tamper_alarm": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Reset tamper alarm",
+            "nl": "Sabotage-alarm resetten"
+          },
+          "desc": {
+            "en": "Manually reset the tamper alarm after it has been triggered.",
+            "nl": "Schakel het sabotage-alarm handmatig uit nadat deze is getriggerd."
           }
         }
       },
@@ -303,246 +351,344 @@
           ]
         },
         {
-          "id": "temperature_reporting",
-          "zwave": {
-            "index": 4,
-            "size": 1
-          },
+          "type": "group",
           "label": {
-            "en": "Temperature reporting",
-            "nl": "Temperatuur rapportage"
+            "en": "Temperature",
+            "nl": "Temperatuur"
           },
-          "hint": {
-            "en": "Does not affect temperature alarms",
-            "nl": "Heeft geen invloed op temperatuuralarmering"
-          },
-          "type": "checkbox",
-          "value": true
-        },
-        {
-          "id": "temperature_unit",
-          "zwave": {
-            "index": 5,
-            "size": 1
-          },
-          "label": {
-            "en": "Temperature reporting unit",
-            "nl": "Temperatuur rapportage-eenheid"
-          },
-          "hint": {
-            "en": "This has no effect on how Homey displays the temperature",
-            "nl": "Dit heeft geen invloed op hoe Homey de temperatuur weergeeft"
-          },
-          "type": "dropdown",
-          "value": "0",
-          "values": [
+          "children": [
             {
-              "id": "0",
+              "id": "temperature_reporting",
+              "zwave": {
+                "index": 4,
+                "size": 1
+              },
               "label": {
-                "en": "Celcius",
-                "nl": "Celcius"
+                "en": "Temperature reporting",
+                "nl": "Temperatuur rapportage"
+              },
+              "hint": {
+                "en": "Does not affect temperature alarms",
+                "nl": "Heeft geen invloed op temperatuuralarmering"
+              },
+              "type": "checkbox",
+              "value": true
+            },
+            {
+              "id": "temperature_unit",
+              "zwave": {
+                "index": 5,
+                "size": 1
+              },
+              "label": {
+                "en": "Temperature reporting unit",
+                "nl": "Temperatuur rapportage-eenheid"
+              },
+              "hint": {
+                "en": "This has no effect on how Homey displays the temperature",
+                "nl": "Dit heeft geen invloed op hoe Homey de temperatuur weergeeft"
+              },
+              "type": "dropdown",
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Celcius",
+                    "nl": "Celcius"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Fahrenheit",
+                    "nl": "Fahrenheit"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "temperature_alarms",
+              "zwave": {
+                "index": 6,
+                "size": 1
+              },
+              "label": {
+                "en": "Temperature alarms",
+                "nl": "Temperatuuralarmering"
+              },
+              "type": "checkbox",
+              "value": false
+            },
+            {
+              "id": "temperature_high",
+              "zwave": {
+                "index": 7,
+                "size": 1
+              },
+              "label": {
+                "en": "High temperature alarm level",
+                "nl": "Hoge temperatuur alarm niveau"
+              },
+              "hint": {
+                "en": "-20 to +60 degrees Celcius",
+                "nl": "-20 tot +60 graden Celsius"
+              },
+              "type": "number",
+              "value": 60,
+              "attr": {
+                "min": -20,
+                "max": 60
               }
             },
             {
-              "id": "1",
+              "id": "temperature_low",
+              "zwave": {
+                "index": 8,
+                "size": 1
+              },
               "label": {
-                "en": "Fahrenheit",
-                "nl": "Fahrenheit"
+                "en": "Low temperature alarm level",
+                "nl": "Lage temperatuur alarm niveau"
+              },
+              "hint": {
+                "en": "-20 to +60 degrees Celcius",
+                "nl": "-20 tot +60 graden Celcius"
+              },
+              "type": "number",
+              "value": -20,
+              "attr": {
+                "min": -20,
+                "max": 60
               }
             }
           ]
         },
         {
-          "id": "temperature_alarms",
-          "zwave": {
-            "index": 6,
-            "size": 1
-          },
+          "type": "group",
           "label": {
-            "en": "Temperature alarms",
-            "nl": "Temperatuuralarmering"
+            "en": "Light",
+            "nl": "Licht"
           },
-          "type": "checkbox",
-          "value": false
-        },
-        {
-          "id": "temperature_high",
-          "zwave": {
-            "index": 7,
-            "size": 1
-          },
-          "label": {
-            "en": "High temperature alarm level",
-            "nl": "Hoge temperatuur alarm niveau"
-          },
-          "hint": {
-            "en": "-20 to +60 degrees Celcius",
-            "nl": "-20 tot +60 graden Celsius"
-          },
-          "type": "number",
-          "value": 60,
-          "attr": {
-            "min": -20,
-            "max": 60
-          }
-        },
-        {
-          "id": "temperature_low",
-          "zwave": {
-            "index": 8,
-            "size": 1
-          },
-          "label": {
-            "en": "Low temperature alarm level",
-            "nl": "Lage temperatuur alarm niveau"
-          },
-          "hint": {
-            "en": "-20 to +60 degrees Celcius",
-            "nl": "-20 tot +60 graden Celcius"
-          },
-          "type": "number",
-          "value": -20,
-          "attr": {
-            "min": -20,
-            "max": 60
-          }
-        },
-        {
-          "id": "light_reporting",
-          "zwave": {
-            "index": 9,
-            "size": 1
-          },
-          "value": "1",
-          "label": {
-            "en": "Ambient light reporting",
-            "nl": "Omgevingslicht rapportage"
-          },
-          "hint": {
-            "en": "Bounds are configured by high and low ambient light report level.",
-            "nl": "Bounds are configured by high and low ambient light report level."
-          },
-          "type": "dropdown",
-          "values": [
+          "children": [
             {
-              "id": "0",
+              "id": "light_reporting",
+              "zwave": {
+                "index": 9,
+                "size": 1
+              },
+              "value": "1",
               "label": {
-                "en": "Off",
-                "nl": "Uit"
+                "en": "Ambient light reporting",
+                "nl": "Omgevingslicht rapportage"
+              },
+              "hint": {
+                "en": "Bounds are configured by high and low ambient light report level.",
+                "nl": "Bounds are configured by high and low ambient light report level."
+              },
+              "type": "dropdown",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Off",
+                    "nl": "Uit"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "On",
+                    "nl": "Aan"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "Only outside configured bounds",
+                    "nl": "Alleen buiten ingestelde grenzen"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "light_high",
+              "zwave": {
+                "index": 10,
+                "size": 4
+              },
+              "label": {
+                "en": "High ambient light report level",
+                "nl": "High ambient light report level"
+              },
+              "hint": {
+                "en": "3 to 64000",
+                "nl": "3 tot 64000"
+              },
+              "type": "number",
+              "value": 40000,
+              "attr": {
+                "min": 3,
+                "max": 64000
               }
             },
             {
-              "id": "1",
+              "id": "light_low",
+              "zwave": {
+                "index": 11,
+                "size": 4
+              },
               "label": {
-                "en": "On",
-                "nl": "Aan"
-              }
-            },
-            {
-              "id": "2",
-              "label": {
-                "en": "Only outside configured bounds",
-                "nl": "Alleen buiten ingestelde grenzen"
+                "en": "Low ambient light report level",
+                "nl": "Low ambient light report level"
+              },
+              "hint": {
+                "en": "1 to 42000. Must be significantly lower than high ambient light report level.",
+                "nl": "1 tot 42000. Must be significantly lower than high ambient light report level."
+              },
+              "type": "number",
+              "value": 5000,
+              "attr": {
+                "min": 1,
+                "max": 42000
               }
             }
           ]
         },
         {
-          "id": "light_high",
-          "zwave": {
-            "index": 10,
-            "size": 4
-          },
+          "type": "group",
           "label": {
-            "en": "High ambient light report level",
-            "nl": "High ambient light report level"
+            "en": "Humidity",
+            "nl": "Vochtigheid"
           },
-          "hint": {
-            "en": "3 to 64000",
-            "nl": "3 tot 64000"
-          },
-          "type": "number",
-          "value": 40000,
-          "attr": {
-            "min": 3,
-            "max": 64000
-          }
+          "children": [
+            {
+              "id": "leakage_alarm",
+              "zwave": {
+                "index": 12,
+                "size": 1
+              },
+              "label": {
+                "en": "Leakage alarm",
+                "nl": "Lekkage-alarm"
+              },
+              "type": "checkbox",
+              "value": true
+            },
+            {
+              "id": "leakage_alarm_level",
+              "zwave": {
+                "index": 13,
+                "size": 1
+              },
+              "label": {
+                "en": "Leakage alarm level",
+                "nl": "Lekkage-alarm level"
+              },
+              "hint": {
+                "en": "1 to 100\r\n(1=almost dry, 100=wet)",
+                "nl": "1 tot 100\r\n(1=Bijna droog, 100=nat)"
+              },
+              "type": "number",
+              "value": 10,
+              "attr": {
+                "min": 1,
+                "max": 100
+              }
+            },
+            {
+              "id": "humidity_reporting_interval",
+              "zwave": {
+                "index": 14,
+                "size": 1
+              },
+              "label": {
+                "en": "Moisture reporting period",
+                "nl": "Vochtigheid rapportageperiode"
+              },
+              "hint": {
+                "en": "0-120: Number of hours between moisture reports (0=off)",
+                "nl": "0-120: Aantal uren tussen vochtigheidsrapportage (0=uit)"
+              },
+              "type": "number",
+              "value": 0,
+              "attr": {
+                "min": 0,
+                "max": 120
+              }
+            }
+          ]
         },
         {
-          "id": "light_low",
-          "zwave": {
-            "index": 11,
-            "size": 4
-          },
+          "type": "group",
           "label": {
-            "en": "Low ambient light report level",
-            "nl": "Low ambient light report level"
+            "en": "Capabilities",
+            "nl": "Functies"
           },
-          "hint": {
-            "en": "1 to 42000. Must be significantly lower than high ambient light report level.",
-            "nl": "1 tot 42000. Must be significantly lower than high ambient light report level."
-          },
-          "type": "number",
-          "value": 5000,
-          "attr": {
-            "min": 1,
-            "max": 42000
-          }
-        },
-        {
-          "id": "leakage_alarm",
-          "zwave": {
-            "index": 12,
-            "size": 1
-          },
-          "label": {
-            "en": "Leakage alarm",
-            "nl": "Lekkage-alarm"
-          },
-          "type": "checkbox",
-          "value": true
-        },
-        {
-          "id": "leakage_alarm_level",
-          "zwave": {
-            "index": 13,
-            "size": 1
-          },
-          "label": {
-            "en": "Leakage alarm level",
-            "nl": "Lekkage-alarm level"
-          },
-          "hint": {
-            "en": "1 to 100\r\n(1=almost dry, 100=wet)",
-            "nl": "1 tot 100\r\n(1=Bijna droog, 100=nat)"
-          },
-          "type": "number",
-          "value": 10,
-          "attr": {
-            "min": 1,
-            "max": 100
-          }
-        },
-        {
-          "id": "humidity_reporting_interval",
-          "zwave": {
-            "index": 14,
-            "size": 1
-          },
-          "label": {
-            "en": "Moisture reporting period",
-            "nl": "Vochtigheid rapportageperiode"
-          },
-          "hint": {
-            "en": "0-120: Number of hours between moisture reports (0=off)",
-            "nl": "0-120: Aantal uren tussen vochtigheidsrapportage (0=uit)"
-          },
-          "type": "number",
-          "value": 0,
-          "attr": {
-            "min": 0,
-            "max": 120
-          }
+          "children": [
+            {
+              "id": "device_type",
+              "label": {
+                 "en": "Device type",
+                 "nl": "Apparaattype"
+              },
+              "hint": {
+                "en": "Used to show or hide measurement capabilities of the Strips Comfort and Drip, which are identical on an electronics level.\r\nHybrid: All measurement capabilities are shown.\r\nComfort: Only temperature and light measurement capabilities are shown.\r\nDrip: Only temperature and humidity measurement capabilities are shown.",
+                "nl": "Hiermee kunnen meetfuncties van de Strips Comfort en Drop (die identiek zijn op elektronica-niveau) getoond of verborgen worden.\r\nHybride: alle meetfuncties worden getoond.\r\nComfort: enkel temperatuur- en lichtmeetfuncties worden getoond.\r\nDrip: enkel temperatuur- en vochtigheidmeetfuncties worden getoond."
+              },
+              "type": "dropdown",
+              "value": "hybrid",
+              "values": [
+                {
+                  "id": "hybrid",
+                  "label": {
+                    "en": "Comfort/Drip Hybrid",
+                    "nl": "Comfort/Drip-hybride"
+                  }
+                },
+                {
+                  "id": "comfort",
+                  "label": {
+                    "en": "Comfort",
+                    "nl": "Comfort"
+                  }
+                },
+                {
+                  "id": "drip",
+                  "label": {
+                    "en": "Drip",
+                    "nl": "Drip"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "tamper_alarm",
+              "label": {
+                "en": "Tamper alarm",
+                "nl": "Sabotage-alarm"
+              },
+              "hint": {
+                "en": "Used to show or hide the tamper alarm capability.",
+                "nl": "Hiermee kan de sabotage-alarmfunctie getoond of verborgen worden."
+              },
+              "type": "checkbox",
+              "value": false
+            },
+            {
+              "id": "maintenance_actions",
+              "label": {
+                 "en": "Maintenance actions",
+                 "nl": "Maintenance actions"
+              },
+              "hint": {
+                "en": "Disabling this hides maintenance actions on this device. Maintenance actions are known to confuse HomeyKit, classifying the sensor as a switch.",
+                "nl": "Wanneer uitgeschakeld worden de onderhoudsacties voor dit apparaat verborgen. Onderhoudsacties verwarren HomeyKit, waardoor de sensor als schakelaar geclassificeerd wordt."
+              },
+              "type": "checkbox",
+              "value": true
+            }
+          ]
         }
       ]
     }
