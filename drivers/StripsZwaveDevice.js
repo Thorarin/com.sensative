@@ -7,7 +7,7 @@ const i18n = {
   settings: {
     restartNeeded: {
       en: 'Restart the Sensative app for changes to take effect. You may also need to restart your Homey app if you get a blank screen.',
-      nl: 'Herstart de Sensative app om de wijzigingen door te voeren. Het zou kunnen dat u de Homey app moet herstarten, als u een leeg scherm krijgt.'
+      nl: 'Herstart de Sensative app om de wijzigingen door te voeren. Het zou kunnen, dat u de Homey app moet herstarten, als u een leeg scherm krijgt.'
     }
   }
 };

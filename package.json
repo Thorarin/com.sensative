@@ -1,11 +1,10 @@
 {
   "name": "com.sensative",
-  "version": "2.1.0",
-  "description": "This app adds support for the Z-wave Sensative strips family (http://www.sensative.com/).",
+  "version": "2.2.0",
+  "description": "This app adds support for the Z-Wave Sensative Strips family (http://www.sensative.com/).",
   "main": "app.js",
   "requires": true,
   "dependencies": {
-    "homey-log": "^1.0.6",
     "homey-meshdriver": "git+https://github.com/athombv/node-homey-meshdriver.git"
   },
   "devDependencies": {},

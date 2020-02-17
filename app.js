@@ -1,7 +1,6 @@
 'use strict';
 
 const Homey = require('homey');
-require('homey-log').Log;
 
 class SensativeZwave extends Homey.App {
 
