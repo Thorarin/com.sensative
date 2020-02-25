@@ -1,4 +1,7 @@
-/node_modules/homey-zwavedriver/.npmignore
 /env.json
 /.vscode
 /*.png
+/node_modules/
+
+# Using Homey Compose
+/app.json

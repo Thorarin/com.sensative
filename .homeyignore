@@ -1,3 +1,33 @@
-/node_modules/homey-meshdriver/examples
+# Exclude development assets
 *.psd
 /*.png
+/drivers/**/*.compose.json
+/package.json
+/package-lock.json
+
+# Strip down homey-meshdriver to bare minimum for supported devices
+/node_modules/homey-meshdriver/assets
+/node_modules/homey-meshdriver/examples
+/node_modules/homey-meshdriver/jsdoc.json
+/node_modules/homey-meshdriver/Gruntfile.js
+/node_modules/homey-meshdriver/README.md
+/node_modules/homey-meshdriver/lib/util
+/node_modules/homey-meshdriver/lib/zigbee
+/node_modules/homey-meshdriver/lib/zwave/ZwaveLightDevice.js
+/node_modules/homey-meshdriver/lib/zwave/ZwaveLockDevice.js
+/node_modules/homey-meshdriver/lib/zwave/ZwaveMeteringDevice.js
+/node_modules/homey-meshdriver/lib/zwave/system/capabilities/*
+!/node_modules/homey-meshdriver/lib/zwave/system/capabilities/alarm_contact
+!/node_modules/homey-meshdriver/lib/zwave/system/capabilities/alarm_heat
+!/node_modules/homey-meshdriver/lib/zwave/system/capabilities/alarm_tamper
+!/node_modules/homey-meshdriver/lib/zwave/system/capabilities/alarm_water
+!/node_modules/homey-meshdriver/lib/zwave/system/capabilities/measure_battery
+!/node_modules/homey-meshdriver/lib/zwave/system/capabilities/measure_humidity
+!/node_modules/homey-meshdriver/lib/zwave/system/capabilities/measure_luminance
+!/node_modules/homey-meshdriver/lib/zwave/system/capabilities/measure_temperature
+
+# Remove modules only required by removed homey-meshdriver functionality
+/node_modules/color-space
+/node_modules/almost-equal
+/node_modules/hsluv
+/node_modules/mumath

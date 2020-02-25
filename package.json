@@ -7,9 +7,12 @@
   "dependencies": {
     "homey-meshdriver": "git+https://github.com/athombv/node-homey-meshdriver.git"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "copyfiles": "^2.2.0"
+  },
   "scripts": {
-    "run": "homey app run",
+    "prestart": "copyfiles -sf .homeycompose/app.json .",
+    "start": "homey app run",
     "lint": "eslint **/*.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
