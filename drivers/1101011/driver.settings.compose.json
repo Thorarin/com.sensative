@@ -1,0 +1,67 @@
+[
+  {
+    "id": "report_type",
+    "zwave": {
+      "index": 1,
+      "size": 1
+    },
+    "label": {
+      "en": "Notification type",
+      "nl": "Notificatietype"
+    },
+    "hint": {
+      "en": "Z-Wave command class used for reporting contact sensor events. Notification is typically best.",
+      "nl": "Z-Wave command class die gebruikt wordt voor rapportages van de contactsensor. Notification heeft meestal de voorkeur."
+    },
+    "type": "dropdown",
+    "value": "1",
+    "values": [
+      {
+        "id": "0",
+        "label": {
+          "en": "Binary Sensor",
+          "nl": "Binary Sensor"
+        }
+      },
+      {
+        "id": "1",
+        "label": {
+          "en": "Notification",
+          "nl": "Notification"
+        }
+      }
+    ]
+  },
+  {
+    "id": "led_indication",
+    "zwave": {
+      "index": 2,
+      "size": 1
+    },
+    "label": {
+      "en": "LED indication",
+      "nl": "led-indicatie"
+    },
+    "hint": {
+      "en": "When enabled, the LED on Strips will flash shortly when the door/window is opened.",
+      "nl": "Wanneer ingeschakeld zal de led op Strips kort oplichten als de deur of het raam wordt geopened."
+    },
+    "type": "checkbox",
+    "value": true
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "Capabilities",
+      "nl": "Functies"
+    },
+    "children": [
+      {
+        "$extends": "tamperAlarm"
+      },
+      {
+        "$extends": "maintenanceActions"
+      }
+    ]
+  }
+]

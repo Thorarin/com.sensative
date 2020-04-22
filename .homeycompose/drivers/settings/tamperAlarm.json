@@ -1,0 +1,13 @@
+{
+  "id": "tamper_alarm",
+  "label": {
+    "en": "Tamper alarm",
+    "nl": "Sabotage-alarm"
+  },
+  "hint": {
+    "en": "Used to show or hide the tamper alarm capability.",
+    "nl": "Hiermee kan de sabotage-alarmfunctie getoond of verborgen worden."
+  },
+  "type": "checkbox",
+  "value": true
+}

@@ -1,0 +1,13 @@
+{
+  "id": "maintenance_actions",
+  "label": {
+    "en": "Maintenance actions",
+    "nl": "Maintenance actions"
+  },
+  "hint": {
+    "en": "Disabling this hides maintenance actions on this device. Maintenance actions are known to confuse HomeyKit, classifying the sensor as a switch.",
+    "nl": "Wanneer uitgeschakeld worden de onderhoudsacties voor dit apparaat verborgen. Onderhoudsacties verwarren HomeyKit, waardoor de sensor als schakelaar geclassificeerd wordt."
+  },
+  "type": "checkbox",
+  "value": true
+}

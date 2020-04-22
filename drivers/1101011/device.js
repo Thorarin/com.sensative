@@ -11,18 +11,6 @@ const i18n = {
   }
 };
 
-function tamperReportParser(report) {
-  if (report && report['Notification Type'] === 'Home Security' && report.hasOwnProperty('Event (Parsed)')) {
-    if (report['Event (Parsed)'] === 'Tampering, Invalid Code') {
-      return true;
-    }
-    if (report['Event'] === 254) {
-      return false;
-    }
-  }
-  return null;
-}
-
 class StripsMaZw extends StripsZwaveDevice {
   async onMeshInit() {
     this.registerSetting('report_type', value => new Buffer([parseInt(value)]));
@@ -30,20 +18,25 @@ class StripsMaZw extends StripsZwaveDevice {
 
     const settings = this.getSettings();
     this.registerAlarmContactCapability(settings.report_type);
-    this.registerCapability('measure_battery', 'BATTERY', { getOpts: { getOnOnline: true } });
-
-    await this.ensureCapabilitiesAdded(['alarm_battery', 'alarm_tamper', 'button.reset_tamper_alarm']);
+    await this.registerDynamicCapabilities(settings, true);
     this.registerBatteryCapabilities();
-    this.registerMaintenanceActions();
+    this.updateMaintenanceActionRegistrations();
   }
 
-  registerBatteryCapabilities() {
-    this.registerCapability('alarm_battery', 'BATTERY');
-    this.registerCapability('alarm_tamper', 'NOTIFICATION', { reportParser: tamperReportParser });
+  determineCapabilityIds(settings) {
+    const capabilities = super.determineCapabilityIds(settings);
+    capabilities.unshift('alarm_contact');
+    return capabilities;
   }
 
   async onSettings(oldSettings, newSettings, changedKeysArr) {
     let result = await super.onSettings(oldSettings, newSettings, changedKeysArr);
+
+    // Changing capabilities here seems to crash the Homey App UI on most occasions.
+    //await this.registerDynamicCapabilities(newSettings, false);
+    // if (changedKeysArr.includes('maintenance_actions')) {
+    //   this.updateMaintenanceActionRegistrations();
+    // }
 
     if (changedKeysArr.includes('report_type')) {
       this.registerAlarmContactCapability(newSettings.report_type);
@@ -51,6 +44,15 @@ class StripsMaZw extends StripsZwaveDevice {
     }
 
     return result;
+  }
+
+  async registerDynamicCapabilities(settings, initializing) {
+    const addedCapabilities = await this.ensureCapabilitiesMatch(this.determineCapabilityIds(settings));
+    const capabilities = initializing ? this.getCapabilities() : addedCapabilities;
+
+    if (capabilities.includes('alarm_tamper')) {
+      this.registerTamperAlarmCapability();
+    }
   }
 
   registerAlarmContactCapability(notificationType) {
@@ -69,14 +71,12 @@ class StripsMaZw extends StripsZwaveDevice {
     }
   }
 
-  async registerMaintenanceActions() {
-    const capabilities = this.getCapabilities();
+  updateMaintenanceActionRegistrations() {
+    const maintenanceActions = {
+      'button.reset_tamper_alarm': () => this.setCapabilityValue('alarm_tamper', false)
+    };
 
-    if (!capabilities.includes('button.reset_tamper_alarm')) {
-      await this.addCapability('button.reset_tamper_alarm');
-    }
-
-    this.registerCapabilityListener('button.reset_tamper_alarm', () => this.setCapabilityValue('alarm_tamper', false));
+    this.registerMaintenanceActions(maintenanceActions);
   }
 }
 

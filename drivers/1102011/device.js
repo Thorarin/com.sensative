@@ -25,31 +25,55 @@ function luminanceReportParser(report) {
 
 class StripsMultiSensor extends StripsZwaveDevice {
   async onMeshInit() {
+    this.registerTemperatureCapability();
+    this.registerHeatAlarmCapability();
+
+    const settings = this.getSettings();
+    this.registerDynamicCapabilities(settings, true);
+    this.updateMaintenanceActionRegistrations();
+  }
+
+  determineCapabilityIds(settings) {
+    const capabilities = [];
+
+    capabilities.push('measure_temperature', 'alarm_heat');
+    if (settings.maintenance_actions) {
+      capabilities.push('button.reset_heat_alarm');
+    }
+
+    if (settings.device_type !== 'drip') {
+      capabilities.push('measure_luminance');
+    }
+
+    if (settings.device_type !== 'comfort') {
+      capabilities.push('measure_humidity', 'alarm_water');
+      if (settings.maintenance_actions) {
+        capabilities.push('button.reset_water_alarm');
+      }
+    }
+
+    return capabilities.concat(super.determineCapabilityIds(settings));
+  }
+
+  // Changing capabilities here seems to crash the Homey App UI on most occasions.
+  // async onSettings(oldSettings, newSettings, changedKeysArr) {
+  //   let result = await super.onSettings(oldSettings, newSettings, changedKeysArr);
+  //   await this.registerDynamicCapabilities(newSettings, false);
+  //   if (changedKeysArr.includes('maintenance_actions')) {
+  //     this.updateMaintenanceActionRegistrations();
+  //   }
+  //   return result;
+  // }
+
+  registerTemperatureCapability() {
     this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL', {
       getOpts: {
         getOnOnline: true,
       },
     });
+  }
 
-    this.registerCapability('measure_luminance', 'SENSOR_MULTILEVEL', {
-      reportParser: luminanceReportParser,
-      getOpts: {
-        getOnOnline: true,
-      },
-    });
-    
-    this.registerCapability('measure_humidity', 'SENSOR_MULTILEVEL', {
-      reportParser: report => {
-        if (report['Sensor Type'] === 'Moisture (v5)') {
-          return report['Sensor Value (Parsed)'];
-        }
-        return null;
-      },
-      getOpts: {
-        getOnOnline: true,
-      },
-    });
-
+  registerHeatAlarmCapability() {
     this.registerCapability('alarm_heat', 'NOTIFICATION', {
       reportParser: report => { 
         if (report['Notification Type'] === 'Heat') {
@@ -68,33 +92,69 @@ class StripsMultiSensor extends StripsZwaveDevice {
         getOnOnline: true,
       },
     });
+  }  
 
+  registerLuminanceCapability() {
+    this.registerCapability('measure_luminance', 'SENSOR_MULTILEVEL', {
+      reportParser: luminanceReportParser,
+      getOpts: {
+        getOnOnline: true,
+      },
+    });
+  }
+
+  registerHumidityCapability() {
+    this.registerCapability('measure_humidity', 'SENSOR_MULTILEVEL', {
+      reportParser: report => {
+        if (report['Sensor Type'] === 'Moisture (v5)') {
+          return report['Sensor Value (Parsed)'];
+        }
+        return null;
+      },
+      getOpts: {
+        getOnOnline: true,
+      },
+    });
+  }
+
+  registerWaterAlarmCapability() {
     this.registerCapability('alarm_water', 'NOTIFICATION', {
       getOpts: {
         getOnOnline: true,
       },
     });
-
-    this.registerCapability('alarm_battery', 'BATTERY', {
-      getOpts: {
-        getOnOnline: true,
-      },
-    });
-
-    this.registerCapability('measure_battery', 'BATTERY', {
-      getOpts: {
-        getOnOnline: true,
-      },
-    });
-
-    await this.registerMaintenanceActions();
   }
 
-  async registerMaintenanceActions() {
-    await this.ensureCapabilitiesAdded(['button.reset_heat_alarm', 'button.reset_water_alarm']);
+  async registerDynamicCapabilities(settings, initializing) {
+    const addedCapabilities = await this.ensureCapabilitiesMatch(this.determineCapabilityIds(settings));
+    const capabilities = initializing ? this.getCapabilities() : addedCapabilities;
 
-    this.registerCapabilityListener('button.reset_heat_alarm', () => this.setCapabilityValue('alarm_heat', false));
-    this.registerCapabilityListener('button.reset_water_alarm', () => this.setCapabilityValue('alarm_water', false));
-  }  
+    if (capabilities.includes('measure_luminance')) {
+      this.registerLuminanceCapability();
+    }
+
+    if (capabilities.includes('measure_humidity')) {
+      this.registerHumidityCapability();
+    }
+
+    if (capabilities.includes('alarm_water')) {
+      this.registerWaterAlarmCapability();
+    }
+
+    if (capabilities.includes('alarm_tamper')) {
+      this.registerTamperAlarmCapability();
+    }
+  }
+
+  updateMaintenanceActionRegistrations() {
+    const maintenanceActions = {
+      'button.reset_heat_alarm': () => this.setCapabilityValue('alarm_heat', false),
+      'button.reset_water_alarm': () => this.setCapabilityValue('alarm_water', false),
+      'button.reset_tamper_alarm': () => this.setCapabilityValue('alarm_tamper', false)
+    };
+
+    this.registerMaintenanceActions(maintenanceActions);
+  }
 }
+
 module.exports = StripsMultiSensor;

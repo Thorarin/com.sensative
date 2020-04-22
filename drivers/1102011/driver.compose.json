@@ -1,0 +1,84 @@
+{
+  "name": {
+    "en": "Strips Drip/Comfort",
+    "nl": "Strips Drip/Comfort"
+  },
+  "zwave": {
+    "manufacturerId": 410,
+    "productTypeId": 3,
+    "productId": 10,
+    "learnmode": {
+      "image": "/drivers/1102011/assets/wakeup.svg",
+      "instruction": {
+        "en": "Place the round magnet at the rounded edge. When the LED blinks, move the magnet away. Repeat 3 times within 10 seconds.",
+        "nl": "Plaats de ronde magneet op de afgeronde zijde. Haal de magneet weer weg als de LED knippert. Herhaal 3 keer binnen 10 seconden."
+      }
+    },
+    "associationGroups": [
+      1
+    ],
+    "associationGroupsOptions": {
+      "1": {
+        "hint": {
+          "en": "Z-Wave Plus Lifeline"
+        }
+      }
+    }
+  },
+  "class": "sensor",
+  "capabilities": [
+    "measure_temperature",
+    "measure_luminance",
+    "measure_humidity",
+    "alarm_heat",
+    "alarm_water",
+    "measure_battery",
+    "alarm_battery",
+    "alarm_tamper",
+    "button.reset_heat_alarm",
+    "button.reset_water_alarm",
+    "button.reset_tamper_alarm"
+  ],
+  "capabilitiesOptions": {
+    "button.reset_heat_alarm": {
+      "maintenanceAction": true,
+      "title": {
+        "en": "Reset heat alarm",
+        "nl": "Hitte-alarm resetten"
+      },
+      "desc": {
+        "en": "Manually reset the heat alarm after it has been triggered.",
+        "nl": "Schakel het hitte-alarm handmatig uit nadat deze is getriggerd."
+      }
+    },
+    "button.reset_water_alarm": {
+      "maintenanceAction": true,
+      "title": {
+        "en": "Reset water alarm",
+        "nl": "wateralarm resetten"
+      },
+      "desc": {
+        "en": "Manually reset the water alarm after it has been triggered.",
+        "nl": "Schakel het wateralarm handmatig uit nadat deze is getriggerd."
+      }
+    },
+    "button.reset_tamper_alarm": {
+      "maintenanceAction": true,
+      "title": {
+        "en": "Reset tamper alarm",
+        "nl": "Sabotage-alarm resetten"
+      },
+      "desc": {
+        "en": "Manually reset the tamper alarm after it has been triggered.",
+        "nl": "Schakel het sabotage-alarm handmatig uit nadat deze is getriggerd."
+      }
+    }
+  },
+  "energy": {
+    "batteries": [ "INTERNAL" ]
+  },
+  "images": {
+    "large": "/drivers/1102011/assets/images/large.jpg",
+    "small": "/drivers/1102011/assets/images/small.jpg"
+  }
+}
