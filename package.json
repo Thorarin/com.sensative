@@ -8,7 +8,7 @@
     "homey-meshdriver": "git+https://github.com/athombv/node-homey-meshdriver.git"
   },
   "devDependencies": {
-    "copyfiles": "^2.2.0"
+    "copyfiles": "^2.4.0"
   },
   "scripts": {
     "prestart": "copyfiles -sf .homeycompose/app.json .",
