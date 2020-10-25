@@ -13,5 +13,8 @@
   },
   "1.0.1": {
     "en": "In this initial version, Strips will be set to a simple binary sensor. I'd like to switch to using its default operating mode in the future, which may require the device to be re-added.\r\nThe US version of Strips is not yet recognized. It may be added in a future version (testers needed)."
-  }
+  },
+  "2.2.0": {
+    "en": "Improved device settings and HomeyKit compatibility. Reduced app size."
+  }  
 }
