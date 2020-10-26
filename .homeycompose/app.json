@@ -18,7 +18,7 @@
     "large": "/assets/images/large.png",
     "small": "/assets/images/small.png"
   },
-  "version": "2.2.0",
+  "version": "2.2.1",
   "compatibility": ">=1.5.6",
   "tags": {
     "en": [
