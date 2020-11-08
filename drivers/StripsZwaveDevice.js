@@ -3,6 +3,8 @@
 const Homey = require('homey');
 const ZwaveDevice = require('homey-meshdriver/lib/zwave/ZwaveDevice');
 
+const hasOwnProperty = Object.prototype.hasOwnProperty;
+
 const i18n = {
   settings: {
     restartNeeded: {
@@ -13,7 +15,7 @@ const i18n = {
 };
 
 function tamperReportParser(report) {
-  if (report && report['Notification Type'] === 'Home Security' && report.hasOwnProperty('Event (Parsed)')) {
+  if (report && report['Notification Type'] === 'Home Security' && hasOwnProperty.call(report, 'Event (Parsed)')) {
     if (report['Event (Parsed)'] === 'Tampering, Invalid Code') {
       return true;
     }
@@ -78,6 +80,10 @@ class StripsZwaveDevice extends ZwaveDevice {
       if (settings.maintenance_actions) {
         capabilities.push('button.reset_tamper_alarm');
       }
+    }
+
+    if (settings.maintenance_actions) {
+      capabilities.push('button.calibrate_humidity');
     }
 
     return capabilities;

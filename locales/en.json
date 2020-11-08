@@ -1,3 +1,4 @@
 {
-  "requireWakeUpWarning": "Notifications may stop functioning until the device has been woken up."
+  "requireWakeUpWarning": "Notifications may stop functioning until the device has been woken up.",
+  "humidityCalibrationWarning": "Humidity sensor may require recalibration."
 }

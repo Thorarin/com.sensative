@@ -1,0 +1,16 @@
+{
+    "id": "temperature_high",
+    "zwave": {
+      "index": 7,
+      "size": 1
+    },
+    "label": {
+      "en": "High temperature alarm level",
+      "nl": "Hoge temperatuur alarm niveau"
+    },
+    "type": "number",
+    "units": {
+      "en": "°C",
+      "nl": "°C"
+    }        
+  }

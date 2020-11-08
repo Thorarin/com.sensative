@@ -1,0 +1,20 @@
+{
+    "id": "temperature_low",
+    "zwave": {
+      "index": 8,
+      "size": 1
+    },
+    "label": {
+      "en": "Low temperature alarm level",
+      "nl": "Lage temperatuur alarm niveau"
+    },
+    "type": "number",
+    "attr": {
+      "min": -20,
+      "max": 60
+    },
+    "units": {
+      "en": "°C",
+      "nl": "°C"
+    }        
+  }

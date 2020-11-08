@@ -1,34 +1,16 @@
 'use strict';
 
+const Homey = require('homey');
 const StripsZwaveDevice = require('../StripsZwaveDevice');
-
-const hasOwnProperty = Object.prototype.hasOwnProperty;
-
-function luminanceReportParser(report) {
-  const isLuminanceReport =
-    report &&
-    hasOwnProperty.call(report, 'Sensor Type') &&
-    hasOwnProperty.call(report, 'Sensor Value (Parsed)') &&
-    report['Sensor Type'] === 'Luminance (version 1)';
-
-  if (!isLuminanceReport) return null;
-
-  const sensorValue = report['Sensor Value (Parsed)'];
-
-  if (sensorValue < 0) {
-    // Early firmwares of Strips Comfort mistakenly use a 16-bit integer to represent the luminance value.
-    // Z-Wave only supports signed integers, but the value was intended as unsigned.
-    // This should work around that issue, since a lux value can never be negative anyway.
-    return 65536 + sensorValue;
-  }
-
-  return sensorValue;
-}
 
 class StripsMultiSensor extends StripsZwaveDevice {
   async onMeshInit() {
     this.registerTemperatureCapability();
     this.registerHeatAlarmCapability();
+
+    this.registerSetting('temperature_offset', this.decimalTemperatureParser);
+    this.registerSetting('temperature_delta', this.decimalTemperatureParser);
+    this.registerSetting('temperature_alarm_hysteresis', this.decimalTemperatureParser);
 
     const settings = this.getSettings();
     this.registerDynamicCapabilities(settings, true);
@@ -43,29 +25,13 @@ class StripsMultiSensor extends StripsZwaveDevice {
       capabilities.push('button.reset_heat_alarm');
     }
 
-    if (settings.device_type !== 'drip') {
-      capabilities.push('measure_luminance');
-    }
-
-    if (settings.device_type !== 'comfort') {
-      capabilities.push('measure_humidity', 'alarm_water');
-      if (settings.maintenance_actions) {
-        capabilities.push('button.reset_water_alarm');
-      }
+    capabilities.push('measure_humidity', 'alarm_water');
+    if (settings.maintenance_actions) {
+      capabilities.push('button.reset_water_alarm');
     }
 
     return capabilities.concat(super.determineCapabilityIds(settings));
   }
-
-  // Changing capabilities here seems to crash the Homey App UI on most occasions.
-  // async onSettings(oldSettings, newSettings, changedKeysArr) {
-  //   let result = await super.onSettings(oldSettings, newSettings, changedKeysArr);
-  //   await this.registerDynamicCapabilities(newSettings, false);
-  //   if (changedKeysArr.includes('maintenance_actions')) {
-  //     this.updateMaintenanceActionRegistrations();
-  //   }
-  //   return result;
-  // }
 
   registerTemperatureCapability() {
     this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL');
@@ -89,17 +55,20 @@ class StripsMultiSensor extends StripsZwaveDevice {
     });
   }  
 
-  registerLuminanceCapability() {
-    this.registerCapability('measure_luminance', 'SENSOR_MULTILEVEL', {
-      reportParser: luminanceReportParser,
-    });
-  }
-
   registerHumidityCapability() {
     this.registerCapability('measure_humidity', 'SENSOR_MULTILEVEL', {
       reportParser: report => {
         if (report['Sensor Type'] === 'Moisture (v5)') {
-          return report['Sensor Value (Parsed)'];
+          const value = report['Sensor Value (Parsed)'];
+          
+          // Only add warning if there is a significant deviation. Otherwise the warning message could become annoying.
+          if (value <= -5) {
+            this.log(`Humidity sensor reported value ${value}; recalibration may be needed.`);
+            this.setWarning(Homey.__('humidityCalibrationWarning'));
+            return 0;
+          }
+
+          return Math.max(value, 0);
         }
         return null;
       }
@@ -114,10 +83,6 @@ class StripsMultiSensor extends StripsZwaveDevice {
     const addedCapabilities = await this.ensureCapabilitiesMatch(this.determineCapabilityIds(settings));
     const capabilities = initializing ? this.getCapabilities() : addedCapabilities;
 
-    if (capabilities.includes('measure_luminance')) {
-      this.registerLuminanceCapability();
-    }
-
     if (capabilities.includes('measure_humidity')) {
       this.registerHumidityCapability();
     }
@@ -131,14 +96,43 @@ class StripsMultiSensor extends StripsZwaveDevice {
     }
   }
 
+  decimalTemperatureParser(value) {
+    return Math.round(value * 10);
+  }
+
   updateMaintenanceActionRegistrations() {
     const maintenanceActions = {
       'button.reset_heat_alarm': () => this.setCapabilityValue('alarm_heat', false),
       'button.reset_water_alarm': () => this.setCapabilityValue('alarm_water', false),
-      'button.reset_tamper_alarm': () => this.setCapabilityValue('alarm_tamper', false)
+      'button.reset_tamper_alarm': () => this.setCapabilityValue('alarm_tamper', false),
+      'button.calibrate_humidity': () => this.calibrateHumidity()
     };
 
     this.registerMaintenanceActions(maintenanceActions);
+  }
+
+  async calibrateHumidity() {
+    this.log('Starting calibration of humidity sensor');
+
+    // Clear recalibration warning, if present.
+    await this.unsetWarning();
+
+    const commandClassConfiguration = this.getCommandClass('CONFIGURATION');
+
+    if (this.node.battery === true && this.node.online === false) {
+      this.log('Device is not online, calibration command will be queued');  
+    }
+
+    try {
+      await commandClassConfiguration.CONFIGURATION_SET({
+        'Parameter Number': 23,
+        Level: { Size: 1, Default: 0 },
+        'Configuration Value': Buffer.from([1]),
+      });
+    }
+    catch (e) {
+      this.log('Failed to send configuration parameter to start calibration', e);
+    }
   }
 }
 

@@ -70,37 +70,7 @@
         "value": true
       },
       {
-        "id": "temperature_unit",
-        "zwave": {
-          "index": 5,
-          "size": 1
-        },
-        "label": {
-          "en": "Temperature reporting unit",
-          "nl": "Temperatuur rapportage-eenheid"
-        },
-        "hint": {
-          "en": "This has no effect on how Homey displays the temperature",
-          "nl": "Dit heeft geen invloed op hoe Homey de temperatuur weergeeft"
-        },
-        "type": "dropdown",
-        "value": "0",
-        "values": [
-          {
-            "id": "0",
-            "label": {
-              "en": "Celcius",
-              "nl": "Celcius"
-            }
-          },
-          {
-            "id": "1",
-            "label": {
-              "en": "Fahrenheit",
-              "nl": "Fahrenheit"
-            }
-          }
-        ]
+        "$extends": "temperatureUnit"
       },
       {
         "id": "temperature_alarms",
@@ -116,20 +86,7 @@
         "value": false
       },
       {
-        "id": "temperature_high",
-        "zwave": {
-          "index": 7,
-          "size": 1
-        },
-        "label": {
-          "en": "High temperature alarm level",
-          "nl": "Hoge temperatuur alarm niveau"
-        },
-        "hint": {
-          "en": "-20 to +60 degrees Celcius",
-          "nl": "-20 tot +60 graden Celsius"
-        },
-        "type": "number",
+        "$extends": "temperatureHigh",
         "value": 60,
         "attr": {
           "min": -20,
@@ -137,25 +94,8 @@
         }
       },
       {
-        "id": "temperature_low",
-        "zwave": {
-          "index": 8,
-          "size": 1
-        },
-        "label": {
-          "en": "Low temperature alarm level",
-          "nl": "Lage temperatuur alarm niveau"
-        },
-        "hint": {
-          "en": "-20 to +60 degrees Celcius",
-          "nl": "-20 tot +60 graden Celcius"
-        },
-        "type": "number",
-        "value": -20,
-        "attr": {
-          "min": -20,
-          "max": 60
-        }
+        "$extends": "temperatureLow",
+        "value": -20
       }
     ]
   },

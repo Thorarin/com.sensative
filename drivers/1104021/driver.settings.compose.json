@@ -1,0 +1,319 @@
+[
+  {
+    "id": "led_indication",
+    "zwave": {
+      "index": 2,
+      "size": 1
+    },
+    "label": {
+      "en": "LED alarm event reporting",
+      "nl": "LED alarm event rapportage"
+    },
+    "type": "checkbox",
+    "value": true
+  },
+  {
+    "id": "supervision",
+    "zwave": {
+      "index": 15,
+      "size": 1
+    },
+    "label": {
+      "en": "Supervision",
+      "nl": "Supervisie"
+    },
+    "hint": {
+      "en": "Activate Supervision command for important alarm events or all events",
+      "nl": "Schakel Supervision command in voor alarmen of alle events"
+    },
+    "type":"dropdown",
+    "value": "1",
+    "values": [
+      {
+        "id": "0",
+        "label": {
+          "en": "Off",
+          "nl": "Uit"
+        }
+      },
+      {
+        "id": "1",
+        "label": {
+          "en": "Only for alarms",
+          "nl": "Alleen voor alarmen"
+        }
+      },      
+      {
+        "id": "2",
+        "label": {
+          "en": "For all reports",
+          "nl": "Voor alle rapportages"
+        }
+      }      
+    ]
+  },  
+  {
+    "type": "group",
+    "label": {
+      "en": "Temperature",
+      "nl": "Temperatuur"
+    },
+    "children": [
+      {
+        "id": "temperature_reporting_type",
+        "zwave": {
+          "index": 4,
+          "size": 1
+        },
+        "label": {
+          "en": "Temperature reporting type",
+          "nl": "Temperatuur rapportagetype"
+        },
+        "hint": {
+          "en": "Does not affect temperature alarms",
+          "nl": "Heeft geen invloed op temperatuuralarmering"
+        },
+        "type":"dropdown",
+        "value": "0",
+        "values": [
+          {
+            "id": "0",
+            "label": {
+              "en": "Off",
+              "nl": "Uit"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "en": "Temperature delta",
+              "nl": "Temperatuur delta"
+            }
+          },      
+          {
+            "id": "2",
+            "label": {
+              "en": "Periodically: actual",
+              "nl": "Periodiek: momentopname"
+            }
+          },
+          {
+            "id": "3",
+            "label": {
+              "en": "Periodically: average",
+              "nl": "Periodiek: gemiddelde"
+            }
+          }      
+        ]
+      },
+      {
+        "$extends": "temperatureUnit"
+      },
+      {
+        "id": "temperature_alarms",
+        "zwave": {
+          "index": 6,
+          "size": 1
+        },
+        "label": {
+          "en": "Temperature alarms",
+          "nl": "Temperatuuralarmering"
+        },
+        "type": "checkbox",
+        "value": false
+      },
+      {
+        "$extends": "temperatureHigh",
+        "value": 40,
+        "attr": {
+          "min": -20,
+          "max": 80
+        }
+      },
+      {
+        "$extends": "temperatureLow",
+        "value": 5
+      },
+      {
+        "id": "temperature_offset",
+        "zwave": {
+          "index": 24,
+          "size": 1
+        },
+        "label": {
+          "en": "Temperature offset",
+          "nl": "Temperatuurcorrectie"
+        },
+        "hint": {
+          "en": "Used to calibrate temperature reports",
+          "nl": "Voor het kalibreren van de gerapporteerde temperatuur"
+        },
+        "type": "number",
+        "value": 0,
+        "attr": {
+          "min": -10,
+          "max": 10
+        },
+        "units": {
+          "en": "°C",
+          "nl": "°C"
+        }
+      },
+      {
+        "id": "temperature_reporting_period",
+        "zwave": {
+          "index": 25,
+          "size": 2
+        },
+        "label": {
+          "en": "Temperature reporting interval",
+          "nl": "Temperatuur rapportage-interval"
+        },
+        "hint": {
+          "en": "Used when the reporting temperature periodically (see temperature reporting type)",
+          "nl": "Gebruikt wanneer de temperatuur periodiek wordt gerapporteerd (zie temperatuur rapportagetype)"
+        },
+        "type": "number",
+        "value": 1440,
+        "attr": {
+          "min": 15,
+          "max": 1440
+        },
+        "units": {
+          "en": "minutes",
+          "nl": "minuten"
+        }
+      },
+      {
+        "id": "temperature_delta",
+        "zwave": {
+          "index": 26,
+          "size": 1
+        },
+        "label": {
+          "en": "Temperature delta",
+          "nl": "Temperatuur delta"
+        },
+        "hint": {
+          "en": "Temperature is reported when it has changed more than the delta value",
+          "nl": "Temperatuur wordt gerapporteerd wanneer deze meer wijzigt dan de delta-waarde"
+        },
+        "type": "number",
+        "value": 2.0,
+        "attr": {
+          "min": 0.5,
+          "max": 10
+        },
+        "units": {
+          "en": "°C",
+          "nl": "°C"
+        }
+      },
+      {
+        "id": "temperature_alarm_hysteresis",
+        "zwave": {
+          "index": 27,
+          "size": 1
+        },
+        "label": {
+          "en": "Temperature hysteresis for alarms",
+          "nl": "Temperatuur-hysterese voor alarmen"
+        },
+        "hint": {
+          "en": "Resets the alarm when the current temperature is at least this number of degrees away from the high/low temperature alarm level",
+          "nl": "Reset het alarm wanneer de huidige temperatuur minstens dit aantal graden afwijkt van het hoge/lage temperatuur alarm niveau"
+        },
+        "type": "number",
+        "value": 2.0,
+        "attr": {
+          "min": 0.5,
+          "max": 10
+        },
+        "units": {
+          "en": "°C",
+          "nl": "°C"
+        }
+      }      
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "Humidity",
+      "nl": "Vochtigheid"
+    },
+    "children": [
+      {
+        "id": "leakage_alarm",
+        "zwave": {
+          "index": 12,
+          "size": 1
+        },
+        "label": {
+          "en": "Leakage alarm",
+          "nl": "Lekkage-alarm"
+        },
+        "type": "checkbox",
+        "value": true
+      },
+      {
+        "id": "leakage_alarm_level",
+        "zwave": {
+          "index": 13,
+          "size": 1
+        },
+        "label": {
+          "en": "Leakage alarm level",
+          "nl": "Lekkage-alarm level"
+        },
+        "hint": {
+          "en": "1 to 100\r\n(1=almost dry, 100=wet)",
+          "nl": "1 tot 100\r\n(1=Bijna droog, 100=nat)"
+        },
+        "type": "number",
+        "value": 10,
+        "attr": {
+          "min": 1,
+          "max": 100
+        }
+      },
+      {
+        "id": "humidity_reporting_interval",
+        "zwave": {
+          "index": 14,
+          "size": 1
+        },
+        "label": {
+          "en": "Moisture reporting period",
+          "nl": "Vochtigheid rapportageperiode"
+        },
+        "hint": {
+          "en": "0-120: Number of hours between moisture reports (0=off)",
+          "nl": "0-120: Aantal uren tussen vochtigheidsrapportage (0=uit)"
+        },
+        "type": "number",
+        "value": 0,
+        "attr": {
+          "min": 0,
+          "max": 120
+        }
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "Capabilities",
+      "nl": "Functies"
+    },
+    "children": [
+      {
+        "$extends": "tamperAlarm",
+        "value": false
+      },
+      {
+        "$extends": "maintenanceActions"
+      }
+    ]
+  }
+]

@@ -1,0 +1,33 @@
+{
+    "id": "temperature_unit",
+    "zwave": {
+      "index": 5,
+      "size": 1
+    },
+    "label": {
+      "en": "Temperature reporting unit",
+      "nl": "Temperatuur rapportage-eenheid"
+    },
+    "hint": {
+      "en": "This has no effect on how Homey displays the temperature",
+      "nl": "Dit heeft geen invloed op hoe Homey de temperatuur weergeeft"
+    },
+    "type": "dropdown",
+    "value": "0",
+    "values": [
+      {
+        "id": "0",
+        "label": {
+          "en": "Celcius",
+          "nl": "Celcius"
+        }
+      },
+      {
+        "id": "1",
+        "label": {
+          "en": "Fahrenheit",
+          "nl": "Fahrenheit"
+        }
+      }
+    ]
+  }
