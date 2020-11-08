@@ -66,11 +66,7 @@ class StripsMultiSensor extends StripsZwaveDevice {
   // }
 
   registerTemperatureCapability() {
-    this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL', {
-      getOpts: {
-        getOnOnline: true,
-      },
-    });
+    this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL');
   }
 
   registerHeatAlarmCapability() {
@@ -87,19 +83,13 @@ class StripsMultiSensor extends StripsZwaveDevice {
         }
 
         return null;
-      },
-      getOpts: {
-        getOnOnline: true,
-      },
+      }
     });
   }  
 
   registerLuminanceCapability() {
     this.registerCapability('measure_luminance', 'SENSOR_MULTILEVEL', {
       reportParser: luminanceReportParser,
-      getOpts: {
-        getOnOnline: true,
-      },
     });
   }
 
@@ -110,19 +100,12 @@ class StripsMultiSensor extends StripsZwaveDevice {
           return report['Sensor Value (Parsed)'];
         }
         return null;
-      },
-      getOpts: {
-        getOnOnline: true,
-      },
+      }
     });
   }
 
   registerWaterAlarmCapability() {
-    this.registerCapability('alarm_water', 'NOTIFICATION', {
-      getOpts: {
-        getOnOnline: true,
-      },
-    });
+    this.registerCapability('alarm_water', 'NOTIFICATION');
   }
 
   async registerDynamicCapabilities(settings, initializing) {
